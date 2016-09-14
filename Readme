@@ -1,0 +1,8 @@
+Attention afin de permettre une architecture sous forme de package en python :
+Commencez d'abord par ajouter le dossier sci au PYTHONPATH , sans quoi les imports ne marcheront pas.
+
+Méthode temporaire à un terminal :
+    export PYTHONPATH=$PYTHONPATH:/home/matthieu/example
+
+
+Méthode permanente (la même chose dans le bash profile ou le bashrc)
