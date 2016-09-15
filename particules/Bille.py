@@ -1,5 +1,7 @@
 import random
 import State as s
+from core import Agent
+
 
 class Bille(Agent):
     """
