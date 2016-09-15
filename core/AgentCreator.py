@@ -4,5 +4,5 @@ class AgentCreator(object):
         super(AgentCreator, self).__init__()
 
         
-    def create(indice,x,y,env,trace) :
+    def create(self,indice,x,y,env,trace) :
         raise NotImplementedError

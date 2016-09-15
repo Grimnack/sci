@@ -1,6 +1,4 @@
 import random
-from agents.bille import Bille as b
-import Window as w
 
 class Environnement(object):
     """docstring for Environnement"""

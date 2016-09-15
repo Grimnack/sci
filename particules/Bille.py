@@ -3,7 +3,7 @@ import State as s
 from core import Agent
 
 
-class Bille(Agent):
+class Bille(Agent.Agent):
     """
     docstring for Bille
 
@@ -101,7 +101,7 @@ class Bille(Agent):
         
         
     def place_agent(self,fenetre) :
-        self.cercle(self.state.x*fenetre.caseX + fenetre.caseX/2, self.state.y * fenetre.caseY + fenetre.caseY / 2,min(fenetre.caseX,fenetre.caseY)/2 ,coul=self.color)
-        if(!(self.indice == None)):
-            fenetre.can.create_text(self.state.x*fenetre.caseX + fenetre.caseX/2,self.state.y * fenetre.caseY + fenetre.caseY / 2,text=str(indice),tag='text')
+        self.cercle(fenetre, self.state.x*fenetre.caseX + fenetre.caseX/2, self.state.y * fenetre.caseY + fenetre.caseY / 2,min(fenetre.caseX,fenetre.caseY)/2 ,coul=self.color)
+        if(not (self.indice == None)):
+            fenetre.can.create_text(self.state.x*fenetre.caseX + fenetre.caseX/2,self.state.y * fenetre.caseY + fenetre.caseY / 2,text=str(self.indice),tag='text')
 

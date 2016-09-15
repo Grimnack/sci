@@ -1,10 +1,11 @@
 from particules import Bille as b
+from core import AgentCreator
 
-class BilleCreator(BilleCreator):
+class BilleCreator(AgentCreator.AgentCreator):
     """docstring for BilleCreator"""
     def __init__(self):
         super(BilleCreator, self).__init__()
 
-    def create(indice,x,y,env,trace) :
+    def create(self,indice,x,y,env,trace) :
         return b.Bille(indice,x,y,env,trace)
         
