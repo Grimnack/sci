@@ -1,6 +1,4 @@
 from tkinter import *
-from particules import Bille as b
-from particules import State as s
 
 
 class Window(object):
@@ -23,8 +21,10 @@ class Window(object):
         self.tk = Tk()
         self.tk.title(title)
 
-        self.can = Canvas(self.tk, width =self.canvasSizeX, height =self.canvasSizeY, bg =windowbg)
-        self.can.pack(side=TOP)
+        self.can = Canvas(self.tk, width =self.canvasSizeX, height =self.canvasSizeY, bg = windowbg)
+        self.can.pack(side=LEFT)
+
+
 
     
     def grille(self) :
@@ -36,15 +36,3 @@ class Window(object):
 
         for colonne in range(self.gridSizeX):
             self.can.create_line(colonne * self.caseX, 0, colonne * self.caseX, self.canvasSizeY, fill ='black')  
-    
-    def cercle(self,x, y, r, coul ='black'):
-        '''
-        tracé d'un cercle de centre (x,y) et de rayon r
-        Fonction reprise sur http://python.developpez.com/cours/TutoSwinnen/?page=Chapitre8
-        '''
-        self.can.create_oval(x-r, y-r, x+r, y+r, outline='black', fill=coul, tag='ball')
-        
-        
-    def place_bille(self,bille,indice) :
-        self.cercle(bille.state.x*self.caseX + self.caseX/2, bille.state.y * self.caseY + self.caseY / 2,min(self.caseX,self.caseY)/2 ,coul=bille.color)
-        self.can.create_text(bille.state.x*self.caseX + self.caseX/2,bille.state.y * self.caseY + self.caseY / 2,text=str(indice),tag='text')
