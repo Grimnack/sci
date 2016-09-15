@@ -1,10 +1,19 @@
 from core import SMA
+from core import Window as w
 import BilleCreator as bc
 
-SMA.SMA(gridSizeX=100
-    ,gridSizeY=100
-    ,canvasSizeX=1920
-    ,canvasSizeY=1080
+gridSizeX=100
+gridSizeY=100
+canvasSizeX=800
+canvasSizeY=600
+
+
+fenetre = w.Window(gridSizeX=gridSizeX,gridSizeY=gridSizeY,canvasSizeX=canvasSizeX,canvasSizeY=canvasSizeY,boxSize=None,windowbg='ivory',title="Simulation de particules")
+
+SMA.SMA(gridSizeX=gridSizeX
+    ,gridSizeY=gridSizeY
+    ,canvasSizeX=canvasSizeX
+    ,canvasSizeY=canvasSizeY
     ,refresh=1
     ,scheduling=""
     ,nbTicks=0
@@ -13,8 +22,8 @@ SMA.SMA(gridSizeX=100
     ,seed=None
     ,delay=1
     ,nbAgents=100
+    ,fenetre=fenetre
     ,torique=False
     ,agentCreator=bc.BilleCreator()
-    ,windowbg="white"
     ,title="Simulation de particules"
     )

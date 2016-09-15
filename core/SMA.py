@@ -11,7 +11,7 @@ class SMA(object):
     """docstring for SMA
     Il n'y a pas d'implementation en python mais on lui donne le même comportement qu'un observable
     """
-    def __init__(self,gridSizeX,gridSizeY,canvasSizeX,canvasSizeY,delay,scheduling,grid,nbTicks,trace,seed,refresh,nbAgents,torique,agentCreator,windowbg='ivory',title='Simulation'):
+    def __init__(self,gridSizeX,gridSizeY,canvasSizeX,canvasSizeY,delay,scheduling,grid,nbTicks,trace,seed,refresh,nbAgents,torique,agentCreator,fenetre,title='Simulation'):
 
         if ( (gridSizeX * gridSizeY) < nbAgents ):
             print("Pas assez d'espace pour placer les "+str(nbAgents)+" agents.\nEssayez un plus petit nombre ("+str(gridSizeX * gridSizeY)+" ou moins).")
@@ -31,7 +31,7 @@ class SMA(object):
         #self.colors = ['red','firebrick', 'magenta2','green','yellow','magenta','blue','black', 'chocolate']
         #indiceColor = 0
         random.seed(seed)
-        self.fenetre = w.Window(gridSizeX=gridSizeX,gridSizeY=gridSizeY,canvasSizeX=canvasSizeX,canvasSizeY=canvasSizeY,windowbg=windowbg,title=title)
+        self.fenetre = fenetre
         if self.grid:
             self.fenetre.grille()
         for i in range(nbAgents) :
