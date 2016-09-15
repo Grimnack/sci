@@ -14,7 +14,7 @@ class SMA(object):
     def __init__(self,gridSizeX,gridSizeY,canvasSizeX,canvasSizeY,delay,scheduling,grid,nbTicks,trace,seed,refresh,nbAgents,torique,agentCreator):
 
         if ( (gridSizeX * gridSizeY) < nbAgents ):
-            print("Pas assez d'espace pour places les "+str(nbAgents)+" particules.\nEssayez un plus petit nombre ("+str(gridSizeX * gridSizeY)+" ou moins).")
+            print("Pas assez d'espace pour placer les "+str(nbAgents)+" agents.\nEssayez un plus petit nombre ("+str(gridSizeX * gridSizeY)+" ou moins).")
             return
 
         super(SMA, self).__init__()
@@ -37,7 +37,7 @@ class SMA(object):
         for i in range(nbAgents) :
             (x,y) = self.env.getFreeXYAlea()
             agent = agentCreator.create(i,x,y,self.env,self.trace)
-            self.fenetre.place_bille(agent,i)
+            agent.place_agent(self.fenetre)
             self.env.ajouteAgent(agent)
             self.lesAgents.append(agent)
 
@@ -72,7 +72,7 @@ class SMA(object):
             self.fenetre.can.delete("ball")
             self.fenetre.can.delete("text")
             for agent in self.lesAgents :
-                self.fenetre.place_bille(agent,agent.indice)
+                agent.place_agent(self.fenetre)
 
         if self.trace:
             print("Fin du tour n°"+str(self.nbActualTicks))
