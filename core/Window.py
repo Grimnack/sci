@@ -5,7 +5,7 @@ from particules import State as s
 
 class Window(object):
     """docstring for Window"""
-    def __init__(self, gridSizeX,gridSizeY,canvasSizeX,canvasSizeY,boxSize=None):
+    def __init__(self, gridSizeX,gridSizeY,canvasSizeX,canvasSizeY,boxSize=None,windowbg='ivory',title='Simulation'):
         #super(Window, self).__init__()
         self.gridSizeX = gridSizeX
         self.gridSizeY = gridSizeY
@@ -21,9 +21,9 @@ class Window(object):
             self.caseX,self.caseY = boxSize
 
         self.tk = Tk()
-        self.tk.title('Simulation de particules')
+        self.tk.title(title)
 
-        self.can = Canvas(self.tk, width =self.canvasSizeX, height =self.canvasSizeY, bg ='ivory')
+        self.can = Canvas(self.tk, width =self.canvasSizeX, height =self.canvasSizeY, bg =windowbg)
         self.can.pack(side=TOP)
 
     
@@ -32,10 +32,10 @@ class Window(object):
         dessine notre magnifique grille
         '''
         for ligne in range(self.gridSizeY):
-            self.can.create_line(0, ligne * self.caseY, self.canvasSizeX, ligne * self.caseY, fill ='blue')  
+            self.can.create_line(0, ligne * self.caseY, self.canvasSizeX, ligne * self.caseY, fill ='black')  
 
         for colonne in range(self.gridSizeX):
-            self.can.create_line(colonne * self.caseX, 0, colonne * self.caseX, self.canvasSizeY, fill ='green')  
+            self.can.create_line(colonne * self.caseX, 0, colonne * self.caseX, self.canvasSizeY, fill ='black')  
     
     def cercle(self,x, y, r, coul ='black'):
         '''
