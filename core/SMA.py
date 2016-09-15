@@ -61,6 +61,16 @@ class SMA(object):
         for agent in self.lesAgents:
             agent.decide()
 
+
+        """
+        Solution pour les requins morts ?
+        for agent in self.lesAgents[:]:
+            if agent.killMe:
+                self.lesAgents.remove(agent)
+            else:
+                agent.decide()
+        """
+
         """
         Further code for a chaos mode
         for i in range(len(self.lesAgents)):
