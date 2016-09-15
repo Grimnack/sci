@@ -20,7 +20,7 @@ class SMA(object):
         super(SMA, self).__init__()
         self.env = env.Environnement(gridSizeX,gridSizeY,torique=torique)
         self.delay = delay
-        self.scheduling = scheduling in ("random","rand","aleatoire","alea","aléatoire","shuffle","die","dice")
+        self.scheduling = scheduling
         self.nbTicks = nbTicks
         self.nbActualTicks = 0
         self.trace = trace
@@ -55,31 +55,18 @@ class SMA(object):
         self.nbActualTicks = self.nbActualTicks + 1
 
         # 1. Les billes décident de leur nouvelles positions. L'ordre de décision est séquentiel (toujours la même balle en premier) ou aléatoire.
-        if self.scheduling:
-            random.shuffle(self.lesAgents)
-
-        for agent in self.lesAgents:
-            agent.decide()
-
-
-        """
-        Solution pour les requins morts ?
-        for agent in self.lesAgents[:]:
-            if agent.killMe:
-                self.lesAgents.remove(agent)
-            else:
+        if self.scheduling in ("chaos","unfair","rand","aleatoire","alea","aléatoire"):
+            for i in range(len(self.lesAgents)):
+                agent = random.choice(self.lesAgents)
                 agent.decide()
-        """
-
-        """
-        Further code for a chaos mode
-        for i in range(len(self.lesAgents)):
-            self.lesAgents[random.randint(0, len(self.lesAgents) - 1)].decide()
-        """
+        elif self.scheduling in ("fair"):
+            random.shuffle(self.lesAgents)
+            for agent in self.lesAgents:
+                agent.decide()
 
         # 2. Mise à jour de l'affichage tous les refresh ticks. Si refresh = 1, l'affichage est mis à jour à chaque fin de tick.
         if(self.nbActualTicks % self.refresh) == 0 :     
-            self.fenetre.can.delete("ball")
+            self.fenetre.can.delete("agent")
             self.fenetre.can.delete("text")
             for agent in self.lesAgents :
                 agent.place_agent(self.fenetre)

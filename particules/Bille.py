@@ -97,7 +97,7 @@ class Bille(Agent.Agent):
         tracé d'un cercle de centre (x,y) et de rayon r
         Fonction reprise sur http://python.developpez.com/cours/TutoSwinnen/?page=Chapitre8
         '''
-        fenetre.can.create_oval(x-r, y-r, x+r, y+r, outline='black', fill=coul, tag='ball')
+        fenetre.can.create_oval(x-r, y-r, x+r, y+r, outline='black', fill=coul, tag='agent')
         
         
     def place_agent(self,fenetre) :
