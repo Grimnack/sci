@@ -91,3 +91,17 @@ class Bille(Agent):
         self.futurY = futurY
         self.update()
 
+
+    def cercle(self,fenetre,x, y, r, coul ='black'):
+        '''
+        tracé d'un cercle de centre (x,y) et de rayon r
+        Fonction reprise sur http://python.developpez.com/cours/TutoSwinnen/?page=Chapitre8
+        '''
+        fenetre.can.create_oval(x-r, y-r, x+r, y+r, outline='black', fill=coul, tag='ball')
+        
+        
+    def place_agent(self,fenetre) :
+        self.cercle(self.state.x*fenetre.caseX + fenetre.caseX/2, self.state.y * fenetre.caseY + fenetre.caseY / 2,min(fenetre.caseX,fenetre.caseY)/2 ,coul=self.color)
+        if(!(self.indice == None)):
+            fenetre.can.create_text(self.state.x*fenetre.caseX + fenetre.caseX/2,self.state.y * fenetre.caseY + fenetre.caseY / 2,text=str(indice),tag='text')
+

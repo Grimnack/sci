@@ -8,3 +8,6 @@ class Agent(object):
         
     def update(self) :
         raise NotImplementedError
+
+    def place_agent(self,fenetre):
+        raise NotImplementedError
