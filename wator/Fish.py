@@ -65,9 +65,6 @@ class Fish(Agent.Agent):
 
     def update(self) :
         """
-        ATTENTION
-        Problematique actuelle comment faire en sorte d'ajouter notre nouveau poisson à la liste des agents ?
-        Contenir la liste des Agents dans l'environnement ;) IZI GAME IZI LIFE
         """
         self.age += 1
         self.color = "blue"
@@ -81,3 +78,16 @@ class Fish(Agent.Agent):
 
         # TODO TODO TODO TODO TODO 
         
+    def cercle(self,fenetre,x, y, r, coul ='black'):
+        '''
+        tracé d'un cercle de centre (x,y) et de rayon r
+        Fonction reprise sur http://python.developpez.com/cours/TutoSwinnen/?page=Chapitre8
+        '''
+        fenetre.can.create_oval(x-r, y-r, x+r, y+r, outline='black', fill=coul, tag='agent')
+        
+        
+    def place_agent(self,fenetre) :
+        self.cercle(fenetre, self.x*fenetre.caseX + fenetre.caseX/2, self.y * fenetre.caseY + fenetre.caseY / 2,min(fenetre.caseX,fenetre.caseY)/2 ,coul=self.color)
+        if(not (self.indice == None)):
+            fenetre.can.create_text(self.x*fenetre.caseX + fenetre.caseX/2,self.y * fenetre.caseY + fenetre.caseY / 2,text=str(self.indice),tag='text')
+

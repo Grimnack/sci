@@ -17,6 +17,7 @@ class Shark(object):
         self.futurY = None
         self.age = 0
         self.color = "pink"
+
       
     def randomNextPos(self) :
         lesPas = [-1,0,1]
@@ -47,12 +48,13 @@ class Shark(object):
         return (futurX,futurY)
 
 
-    """
-    S'il y a des poissons dans son voisinage (torique ou pas), le requin va en manger l'un d'entre eux (et donc aller sur sa case).
-    Cette fonction doit renvoyer la liste des poissons à proximité.
-    [(x,y),(z,t),etc] en cas de poissons, [] sinon
-    """
     def whereIsTheFish(self):
+        """
+        S'il y a des poissons dans son voisinage (torique ou pas), le requin va en manger l'un d'entre eux (et donc aller sur sa case).
+        Cette fonction doit renvoyer la liste des poissons à proximité.
+        [(x,y),(z,t),etc] en cas de poissons, [] sinon
+        """
+
     	return []
 
     def decide(self) :
@@ -89,15 +91,11 @@ class Shark(object):
 
     def update(self) :
         """
-        ATTENTION
-        Problematique actuelle comment faire en sorte d'ajouter notre nouveau poisson à la liste des agents ?
-        Contenir la liste des Agents dans l'environnement ;) IZI GAME IZI LIFE
         """
 
         if self.killMe:
-        	self.env.grille[self.y][self.x] = None
-        #Faut absolument prévenir SMA pour supprimer le requin de la liste lesAgents.
-        #Etre bourrin et donner SMA en attribut d'un agent ? Bof, vraiment bof et ça peut faire un Concurrent Modification Error peut-être.
+        	self.env.kill(self)
+            return
 
         self.age += 1
         self.color = "red"
@@ -111,3 +109,17 @@ class Shark(object):
             self.y = self.futurY
 
         # TODO TODO TODO TODO TODO 
+
+    def cercle(self,fenetre,x, y, r, coul ='black'):
+        '''
+        tracé d'un cercle de centre (x,y) et de rayon r
+        Fonction reprise sur http://python.developpez.com/cours/TutoSwinnen/?page=Chapitre8
+        '''
+        fenetre.can.create_oval(x-r, y-r, x+r, y+r, outline='black', fill=coul, tag='agent')
+        
+        
+    def place_agent(self,fenetre) :
+        self.cercle(fenetre, self.x*fenetre.caseX + fenetre.caseX/2, self.y * fenetre.caseY + fenetre.caseY / 2,min(fenetre.caseX,fenetre.caseY)/2 ,coul=self.color)
+        if(not (self.indice == None)):
+            fenetre.can.create_text(self.x*fenetre.caseX + fenetre.caseX/2,self.y * fenetre.caseY + fenetre.caseY / 2,text=str(self.indice),tag='text')
+

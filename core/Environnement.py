@@ -29,5 +29,9 @@ class Environnement(object):
         return self.lesCouples.pop()
 
     def ajouteAgent(self,agent):
-        self.grille[agent.state.y][agent.state.x] = agent
+        self.grille[agent.gety()][agent.getx()] = agent
         self.lesAgents.append(agent) 
+
+    def kill(self,agent) :
+        self.grille[agent.gety()][agent.getx()] = None
+        self.lesAgents.remove(agent)

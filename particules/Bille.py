@@ -20,6 +20,12 @@ class Bille(Agent.Agent):
         self.env = env
         self.trace = trace
 
+    def getx(self) :
+        return self.state.x
+
+    def gety(self) :
+        return self.state.y
+
     def update(self):
         if self.state.bougera :
             self.env.grille[self.state.y][self.state.x] = None
