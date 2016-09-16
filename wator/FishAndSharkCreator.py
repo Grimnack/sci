@@ -14,16 +14,16 @@ class FishAndSharkCreator(AgentCreator.AgentCreator):
         self.sharkStarveTime = sharkStarveTime
         
 
-    def create(self,indice,x,y,env,trace) :
+    def create(self,x,y,env,trace,indice=-1) :
         if (self.nbFish == 0) and (self.nbShark == 0) :
             raise "ERROR FishAndSharkCreator : Limite d agents dépassée"
         elif self.nbFish == 0 :
-            return s.Shark(indice,x,y,env,trace,self.sharkBreedTime,self.sharkStarveTime)
+            return s.Shark(x,y,env,trace,self.sharkBreedTime,self.sharkStarveTime)
         elif self.nbShark == 0 :
-            return f.Fish(indice,x,y,env,trace,self.fishBreedTime)
+            return f.Fish(x,y,env,trace,self.fishBreedTime)
         else :
             shark = random.choice([True,False])
             if shark :
-                return s.Shark(indice,x,y,env,trace,self.sharkBreedTime,self.sharkStarveTime)
+                return s.Shark(x,y,env,trace,self.sharkBreedTime,self.sharkStarveTime)
             else : 
-                return f.Fish(indice,x,y,env,trace,self.fishBreedTime)
+                return f.Fish(x,y,env,trace,self.fishBreedTime)

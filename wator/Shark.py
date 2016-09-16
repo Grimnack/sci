@@ -3,12 +3,11 @@ import random
 
 class Shark(Agent.Agent):
     """docstring for Shark"""
-    def __init__(self, indice, x,y,env,trace,sharkBreedTime,dontStarve):
+    def __init__(self, x,y,env,trace,sharkBreedTime,dontStarve):
         super(Shark, self).__init__()
         self.env = env
         self.x = x
         self.y = y
-        self.indice = indice
         self.trace = trace
         self.sharkBreedTime = sharkBreedTime
         self.sharkBreedTimeCPT = sharkBreedTime
@@ -97,7 +96,7 @@ class Shark(Agent.Agent):
         """
 
         #RIP in spaghettis, never forgetti
-        if self.sharkBreedTimeCPT == 0:
+        if self.dontStarveCPT == 0:
         	self.killMe = True
         	self.update()
         	return
@@ -107,17 +106,17 @@ class Shark(Agent.Agent):
             self.naissance = True
             self.sharkBreedTimeCPT = self.sharkBreedTime
         else :
-            self.sharkBreedTimeCPT -= 1
+            self.sharkBreedTimeCPT = self.sharkBreedTimeCPT - 1
 
 
         #Pourra-t-il bouger ? 3 cas possibles
         (self.futurX,self.futurY) = self.randomNextPos()
 
-        print(1 != 2)
         #1. Il peut manger un possion et donc aller vers lui
         if ((self.env.grille[self.futurY][self.futurX] != None) and self.env.grille[self.futurY][self.futurX].isFish()):
             self.bougera = True
             self.dontStarveCPT = self.dontStarve
+            self.update()
             return
 
         #2 et 3. Qu'il bouge ou pas, s'il n'a pas vu de poisson, il a faim
@@ -129,6 +128,8 @@ class Shark(Agent.Agent):
         else :
             #3. Case vide
             self.bougera = True
+
+        self.update()
 
 
 
@@ -143,11 +144,12 @@ class Shark(Agent.Agent):
 
         if self.bougera :
 
-            if(isinstance(self.env.grille[self.futurY][self.futurX],Fish.Fish)):
+            if ((self.env.grille[self.futurY][self.futurX] != None) and self.env.grille[self.futurY][self.futurX].isFish()):
                 self.env.kill(self.env.grille[self.futurY][self.futurX])
 
             if self.naissance :
-                self.env.grille[self.y][self.x] = Shark(self.x,self.y,self.env,self.trace,self.sharkBreedTime)
+                babyRage = Shark(self.x,self.y,self.env,self.trace,self.sharkBreedTime,self.dontStarve)
+                self.env.ajouteAgent(babyRage)
                 self.naissance = False
 
             self.env.grille[self.futurY][self.futurX] = self
@@ -156,7 +158,6 @@ class Shark(Agent.Agent):
             self.x = self.futurX
             self.y = self.futurY
 
-        # TODO TODO TODO TODO TODO 
 
     def cercle(self,fenetre,x, y, r, coul ='black'):
         '''
@@ -168,8 +169,6 @@ class Shark(Agent.Agent):
         
     def place_agent(self,fenetre) :
         self.cercle(fenetre, self.x*fenetre.caseX + fenetre.caseX/2, self.y * fenetre.caseY + fenetre.caseY / 2,min(fenetre.caseX,fenetre.caseY)/2 ,coul=self.color)
-        #if(not (self.indice == None)):
-        #    fenetre.can.create_text(self.x*fenetre.caseX + fenetre.caseX/2,self.y * fenetre.caseY + fenetre.caseY / 2,text=str(self.indice),tag='text')
 
 
 ##################################################################################

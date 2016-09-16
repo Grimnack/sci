@@ -3,12 +3,11 @@ import random as r
 
 class Fish(Agent.Agent):
     """docstring for Fish"""
-    def __init__(self,indice,x,y,env,trace,fishBreedTime):
+    def __init__(self,x,y,env,trace,fishBreedTime):
         super(Fish, self).__init__()
         self.env = env
         self.x = x
         self.y = y
-        self.indice = indice
         self.trace = trace
         self.fishBreedTime = fishBreedTime
         self.fishBreedTimeCPT = fishBreedTime
@@ -62,7 +61,8 @@ class Fish(Agent.Agent):
             self.naissance = True
             self.fishBreedTimeCPT = self.fishBreedTime
         else :
-            self.fishBreedTimeCPT -= 1
+            self.fishBreedTimeCPT = self.fishBreedTimeCPT - 1
+
         if self.env.grille[self.futurY][self.futurX] == None :
             self.bougera = True
         else :
@@ -79,7 +79,8 @@ class Fish(Agent.Agent):
         self.color = "blue"
         if self.bougera :
             if self.naissance :
-                self.env.grille[self.y][self.x] = Fish(self.x,self.y,self.env,self.trace,self.fishBreedTime)
+                babyRage = Fish(self.x,self.y,self.env,self.trace,self.fishBreedTime)
+                self.env.ajouteAgent(babyRage)
                 self.naissance = False
             self.env.grille[self.futurY][self.futurX] = self
             self.x = self.futurX
@@ -97,6 +98,3 @@ class Fish(Agent.Agent):
         
     def place_agent(self,fenetre) :
         self.cercle(fenetre, self.x*fenetre.caseX + fenetre.caseX/2, self.y * fenetre.caseY + fenetre.caseY / 2,min(fenetre.caseX,fenetre.caseY)/2 ,coul=self.color)
-        #if(not (self.indice == None)):
-        #    fenetre.can.create_text(self.x*fenetre.caseX + fenetre.caseX/2,self.y * fenetre.caseY + fenetre.caseY / 2,text=str(self.indice),tag='text')
-

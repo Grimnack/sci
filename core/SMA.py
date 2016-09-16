@@ -11,7 +11,7 @@ class SMA(object):
     """docstring for SMA
     Il n'y a pas d'implementation en python mais on lui donne le même comportement qu'un observable
     """
-    def __init__(self,gridSizeX,gridSizeY,canvasSizeX,canvasSizeY,delay,scheduling,grid,nbTicks,trace,seed,refresh,nbAgents,torique,agentCreator,fenetre,title='Simulation'):
+    def __init__(self,gridSizeX,gridSizeY,canvasSizeX,canvasSizeY,delay,scheduling,grid,nbTicks,trace,seed,refresh,nbAgents,torique,agentCreator,fenetre):
 
         if ( (gridSizeX * gridSizeY) < nbAgents ):
             print("Pas assez d'espace pour placer les "+str(nbAgents)+" agents.\nEssayez un plus petit nombre ("+str(gridSizeX * gridSizeY)+" ou moins).")
@@ -35,7 +35,7 @@ class SMA(object):
             self.fenetre.grille()
         for i in range(nbAgents) :
             (x,y) = self.env.getFreeXYAlea()
-            agent = agentCreator.create(i,x,y,self.env,self.trace)
+            agent = agentCreator.create(x,y,self.env,self.trace,indice=i)
             agent.place_agent(self.fenetre)
             self.env.ajouteAgent(agent)
 
@@ -44,6 +44,14 @@ class SMA(object):
     def run(self):
         self.fenetre.can.after(self.delay,self.theloop)
         self.fenetre.can.mainloop()
+
+
+    def printf(self): #LUL
+        # 2. Mise à jour de l'affichage tous les refresh ticks. Si refresh = 1, l'affichage est mis à jour à chaque fin de tick.
+        if(self.nbActualTicks % self.refresh) == 0 :     
+            self.fenetre.can.delete("agent")
+            for agent in self.env.lesAgents :
+                agent.place_agent(self.fenetre)
 
     def theloop(self):
 
@@ -59,12 +67,8 @@ class SMA(object):
             for agent in self.env.lesAgents:
                 agent.decide()
 
-        # 2. Mise à jour de l'affichage tous les refresh ticks. Si refresh = 1, l'affichage est mis à jour à chaque fin de tick.
-        if(self.nbActualTicks % self.refresh) == 0 :     
-            self.fenetre.can.delete("agent")
-            self.fenetre.can.delete("text")
-            for agent in self.env.lesAgents :
-                agent.place_agent(self.fenetre)
+        self.printf()
+
 
         if self.trace:
             print("Fin du tour n°"+str(self.nbActualTicks))

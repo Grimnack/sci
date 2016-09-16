@@ -34,4 +34,5 @@ class Environnement(object):
 
     def kill(self,agent) :
         self.grille[agent.gety()][agent.getx()] = None
-        self.lesAgents.remove(agent)
+        if agent in self.lesAgents:
+            self.lesAgents.remove(agent)

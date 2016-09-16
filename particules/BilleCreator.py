@@ -6,6 +6,6 @@ class BilleCreator(AgentCreator.AgentCreator):
     def __init__(self):
         super(BilleCreator, self).__init__()
 
-    def create(self,indice,x,y,env,trace) :
+    def create(self,x,y,env,trace,indice=-1) :
         return b.Bille(indice,x,y,env,trace)
         
