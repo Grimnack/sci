@@ -30,7 +30,7 @@ class Environnement(object):
 
     def ajouteAgent(self,agent):
         self.grille[agent.gety()][agent.getx()] = agent
-        self.lesAgents.append(agent) 
+        self.lesAgents.insert(0,agent) 
 
     def kill(self,agent) :
         self.grille[agent.gety()][agent.getx()] = None

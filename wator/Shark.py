@@ -19,7 +19,7 @@ class Shark(Agent.Agent):
         self.futurX = None
         self.futurY = None
         self.age = 0
-        self.color = "pink"
+        self.color = "HotPink1"
 
     def isFish(self) :
         '''
@@ -139,13 +139,11 @@ class Shark(Agent.Agent):
             self.env.kill(self)
             return
 
-        self.age += 1
-        self.color = "red"
-
         if self.bougera :
 
             self.env.grille[self.y][self.x] = None
 
+            #Manger le poisson
             if ((self.env.grille[self.futurY][self.futurX] != None) and self.env.grille[self.futurY][self.futurX].isFish()):
                 self.env.kill(self.env.grille[self.futurY][self.futurX])
 
@@ -156,9 +154,12 @@ class Shark(Agent.Agent):
 
             self.env.grille[self.futurY][self.futurX] = self
             
-
             self.x = self.futurX
             self.y = self.futurY
+
+        self.age += 1
+        self.color = "red"
+
 
 
     def cercle(self,fenetre,x, y, r, coul ='black'):

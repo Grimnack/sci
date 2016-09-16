@@ -24,6 +24,8 @@ class FishAndSharkCreator(AgentCreator.AgentCreator):
         else :
             shark = random.choice([True,False])
             if shark :
+                self.nbShark -= 1
                 return s.Shark(x,y,env,trace,self.sharkBreedTime,self.sharkStarveTime)
-            else : 
+            else :
+                self.nbFish -= 1 
                 return f.Fish(x,y,env,trace,self.fishBreedTime)

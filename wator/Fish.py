@@ -75,10 +75,6 @@ class Fish(Agent.Agent):
     def update(self) :
         """
         """
-        self.age += 1
-        self.color = "blue"
-
-
         if self.bougera :
 
             self.env.grille[self.y][self.x] = None
@@ -91,6 +87,9 @@ class Fish(Agent.Agent):
             self.env.grille[self.futurY][self.futurX] = self
             self.x = self.futurX
             self.y = self.futurY
+
+        self.age += 1
+        self.color = "blue"
 
         
         
