@@ -1,8 +1,11 @@
+from core import Environnement as e
+import random
+
 class Shark(object):
     """docstring for Shark"""
-    def __init__(self, arg):
+    def __init__(self, x,y,env,trace,sharkBreedTime,dontStarve):
         super(Shark, self).__init__()
-                self.env = env
+        self.env = env
         self.x = x
         self.y = y
         self.trace = trace
@@ -18,44 +21,70 @@ class Shark(object):
         self.age = 0
         self.color = "pink"
 
-      
-    def randomNextPos(self) :
-        lesPas = [-1,0,1]
-        lesPas2LeRetour = [-1,1]
-        futurX = self.x + r.choice(lesPas)
-        if futurX == self.x :
-            futurY = self.y + r.choice(lesPas2LeRetour)
-        else :
-            futurY = self.y + r.choice(lesPas)
-        if self.env.torique :
-            if futurY == -1 :
-                futurY = len(self.env.grille)-1
-            if futurY == len(self.env.grille) :
-                futurY = 0
-            if futurX == -1 :
-                futurX = len(self.env.grille[0]) -1
-            if futurX == len(self.env.grille[0]) :
-                futurX = 0
-        else :
-            if futurY == -1 :
-                futurY = 1
-            if futurY == len(self.env.grille) :
-                futurY = len(self.env.grille)-2
-            if futurX == -1 :
-                futurX = 1
-            if futurX == len(self.env.grille[0]) :
-                futurX = len(self.env.grille[0])-2
-        return (futurX,futurY)
+    def isFish(self) :
+        '''
+        Ouais je sais c'est nul
+        '''
+        return False
 
+    #Test ok
+    def genereListPasAlea(self):
+        ref = [0,1,-1]
+        resultat = []
+        for x in ref :
+            for y in ref :
+                if x == y == 0 :
+                    continue
+                resultat.append((x,y))
+        random.shuffle(resultat)
+        return resultat
 
-    def whereIsTheFish(self):
+    #Test ok
+    def pasToPosition(self,listePas) :
+        '''
+        transforme une liste de pas en une liste de position relative à self et l'environnement
+        il peut y avoir plusieurs position qui se répète dans un monde non torique mais c'est pas grave
+        '''
+        resultat = []
+        for (pasX,pasY) in listePas :
+            futurX = self.x + pasX
+            futurY = self.y + pasY
+            if self.env.torique :
+                if futurY == -1 :
+                    futurY = len(self.env.grille)-1
+                if futurY == len(self.env.grille) :
+                    futurY = 0
+                if futurX == -1 :
+                    futurX = len(self.env.grille[0]) -1
+                if futurX == len(self.env.grille[0]) :
+                    futurX = 0
+            else :
+                if futurY == -1 :
+                    futurY = 1
+                if futurY == len(self.env.grille) :
+                    futurY = len(self.env.grille)-2
+                if futurX == -1 :
+                    futurX = 1
+                if futurX == len(self.env.grille[0]) :
+                    futurX = len(self.env.grille[0])-2
+            resultat.append((futurX,futurY))
+        return resultat
+
+    def randomNextPos(self):
         """
-        S'il y a des poissons dans son voisinage (torique ou pas), le requin va en manger l'un d'entre eux (et donc aller sur sa case).
-        Cette fonction doit renvoyer la liste des poissons à proximité.
-        [(x,y),(z,t),etc] en cas de poissons, [] sinon
+        Légère modification je fais une exloration aléatoire non redondante du voisinnage de Moore,
+        Dès que je trouve un Fish je fonce dessus.
+        Dans le pire des cas il n'y a pas de Fish du coup je pars dans une direction aléatoire. 
         """
+        listePas = self.genereListPasAlea()
+        listePositions = self.pasToPosition(listePas)
+        for (futurX,futurY) in listePositions :
+            if self.env.grille[futurY][futurX] == None :
+                continue
+            elif self.env.grille[futurY][futurX].isFish :
+                return (futurX,futurY)
 
-    	return []
+        return listePositions[0] # qui est bien une position aléatoire
 
     def decide(self) :
         """
@@ -73,7 +102,7 @@ class Shark(object):
         if (len(self.whereIsTheFish()) > 0):
         	print("Miam Miam KFF")
         	self.dontStarveCPT = self.dontStarve
-        else
+        else :
         	self.dontStarveCPT = self.dontStarveCPT - 1
         
         if (isinstance(self.env.grille[futurY][futurX],Shark)) :
@@ -94,7 +123,7 @@ class Shark(object):
         """
 
         if self.killMe:
-        	self.env.kill(self)
+            self.env.kill(self)
             return
 
         self.age += 1
@@ -123,3 +152,11 @@ class Shark(object):
         if(not (self.indice == None)):
             fenetre.can.create_text(self.x*fenetre.caseX + fenetre.caseX/2,self.y * fenetre.caseY + fenetre.caseY / 2,text=str(self.indice),tag='text')
 
+
+##################################################################################
+
+# Tests à l'arrache
+# env = e.Environnement(5, 5,torique=False)
+# shark = Shark(1,1,env,False,None,None)
+# listePas = shark.genereListPasAlea()
+# print(shark.pasToPosition(listePas))

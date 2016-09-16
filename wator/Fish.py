@@ -18,6 +18,12 @@ class Fish(Agent.Agent):
         self.age = 0
         self.color = "green"
 
+    def isFish(self) :
+        '''
+        Ouais je sais c'est nul
+        '''
+        return True
+
     def randomNextPos(self) :
         lesPas = [-1,0,1]
         lesPas2LeRetour = [-1,1]
