@@ -7,6 +7,7 @@ class Environnement(object):
         self.grille = [[None] * tailleX for _ in range(tailleY)]
         self.torique = torique
         self.lesCouples = None
+        self.lesAgents = []
 
     def genereCouplesXY(self) :
         '''
@@ -28,4 +29,5 @@ class Environnement(object):
         return self.lesCouples.pop()
 
     def ajouteAgent(self,agent):
-        self.grille[agent.state.y][agent.state.x] = agent 
+        self.grille[agent.state.y][agent.state.x] = agent
+        self.lesAgents.append(agent) 

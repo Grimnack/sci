@@ -26,7 +26,6 @@ class SMA(object):
         self.trace = trace
         self.refresh = refresh
         self.grid = grid
-        self.lesAgents = []
         
         #self.colors = ['red','firebrick', 'magenta2','green','yellow','magenta','blue','black', 'chocolate']
         #indiceColor = 0
@@ -39,7 +38,6 @@ class SMA(object):
             agent = agentCreator.create(i,x,y,self.env,self.trace)
             agent.place_agent(self.fenetre)
             self.env.ajouteAgent(agent)
-            self.lesAgents.append(agent)
 
         if self.trace:
             print("Placement aléatoire des billes (tour 0)")
@@ -56,19 +54,19 @@ class SMA(object):
 
         # 1. Les billes décident de leur nouvelles positions. L'ordre de décision est séquentiel (toujours la même balle en premier) ou aléatoire.
         if self.scheduling in ("chaos","unfair","rand","aleatoire","alea","aléatoire"):
-            for i in range(len(self.lesAgents)):
-                agent = random.choice(self.lesAgents)
+            for i in range(len(self.env.lesAgents)):
+                agent = random.choice(self.env.lesAgents)
                 agent.decide()
         elif self.scheduling in ("fair"):
-            random.shuffle(self.lesAgents)
-            for agent in self.lesAgents:
+            random.shuffle(self.env.lesAgents)
+            for agent in self.env.lesAgents:
                 agent.decide()
 
         # 2. Mise à jour de l'affichage tous les refresh ticks. Si refresh = 1, l'affichage est mis à jour à chaque fin de tick.
         if(self.nbActualTicks % self.refresh) == 0 :     
             self.fenetre.can.delete("agent")
             self.fenetre.can.delete("text")
-            for agent in self.lesAgents :
+            for agent in self.env.lesAgents :
                 agent.place_agent(self.fenetre)
 
         if self.trace:
