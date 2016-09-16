@@ -3,11 +3,12 @@ import random as r
 
 class Fish(Agent.Agent):
     """docstring for Fish"""
-    def __init__(self,x,y,env,trace,fishBreedTime):
+    def __init__(self,indice,x,y,env,trace,fishBreedTime):
         super(Fish, self).__init__()
         self.env = env
         self.x = x
         self.y = y
+        self.indice = indice
         self.trace = trace
         self.fishBreedTime = fishBreedTime
         self.fishBreedTimeCPT = fishBreedTime
@@ -67,6 +68,8 @@ class Fish(Agent.Agent):
         else :
             self.bougera = False
 
+        self.update()
+
 
 
     def update(self) :
@@ -94,6 +97,6 @@ class Fish(Agent.Agent):
         
     def place_agent(self,fenetre) :
         self.cercle(fenetre, self.x*fenetre.caseX + fenetre.caseX/2, self.y * fenetre.caseY + fenetre.caseY / 2,min(fenetre.caseX,fenetre.caseY)/2 ,coul=self.color)
-        if(not (self.indice == None)):
-            fenetre.can.create_text(self.x*fenetre.caseX + fenetre.caseX/2,self.y * fenetre.caseY + fenetre.caseY / 2,text=str(self.indice),tag='text')
+        #if(not (self.indice == None)):
+        #    fenetre.can.create_text(self.x*fenetre.caseX + fenetre.caseX/2,self.y * fenetre.caseY + fenetre.caseY / 2,text=str(self.indice),tag='text')
 

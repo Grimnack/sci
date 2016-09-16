@@ -39,9 +39,6 @@ class SMA(object):
             agent.place_agent(self.fenetre)
             self.env.ajouteAgent(agent)
 
-        if self.trace:
-            print("Placement aléatoire des billes (tour 0)")
-
         self.run()
 
     def run(self):

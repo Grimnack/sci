@@ -1,13 +1,14 @@
-from core import Environnement as e
+from core import Agent
 import random
 
-class Shark(object):
+class Shark(Agent.Agent):
     """docstring for Shark"""
-    def __init__(self, x,y,env,trace,sharkBreedTime,dontStarve):
+    def __init__(self, indice, x,y,env,trace,sharkBreedTime,dontStarve):
         super(Shark, self).__init__()
         self.env = env
         self.x = x
         self.y = y
+        self.indice = indice
         self.trace = trace
         self.sharkBreedTime = sharkBreedTime
         self.sharkBreedTimeCPT = sharkBreedTime
@@ -112,9 +113,9 @@ class Shark(object):
         #Pourra-t-il bouger ? 3 cas possibles
         (self.futurX,self.futurY) = self.randomNextPos()
 
-
+        print(1 != 2)
         #1. Il peut manger un possion et donc aller vers lui
-        if (isinstance(self.env.grille[self.futurY][self.futurX],Fish)):
+        if ((self.env.grille[self.futurY][self.futurX] != None) and self.env.grille[self.futurY][self.futurX].isFish()):
             self.bougera = True
             self.dontStarveCPT = self.dontStarve
             return
@@ -142,7 +143,7 @@ class Shark(object):
 
         if self.bougera :
 
-            if(isinstance(self.env.grille[self.futurY][self.futurX],Fish)):
+            if(isinstance(self.env.grille[self.futurY][self.futurX],Fish.Fish)):
                 self.env.kill(self.env.grille[self.futurY][self.futurX])
 
             if self.naissance :
@@ -167,8 +168,8 @@ class Shark(object):
         
     def place_agent(self,fenetre) :
         self.cercle(fenetre, self.x*fenetre.caseX + fenetre.caseX/2, self.y * fenetre.caseY + fenetre.caseY / 2,min(fenetre.caseX,fenetre.caseY)/2 ,coul=self.color)
-        if(not (self.indice == None)):
-            fenetre.can.create_text(self.x*fenetre.caseX + fenetre.caseX/2,self.y * fenetre.caseY + fenetre.caseY / 2,text=str(self.indice),tag='text')
+        #if(not (self.indice == None)):
+        #    fenetre.can.create_text(self.x*fenetre.caseX + fenetre.caseX/2,self.y * fenetre.caseY + fenetre.caseY / 2,text=str(self.indice),tag='text')
 
 
 ##################################################################################
