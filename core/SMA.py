@@ -69,7 +69,6 @@ class SMA(object):
 
         self.printf()
 
-
         if self.trace:
             print("Fin du tour n°"+str(self.nbActualTicks))
 

@@ -144,6 +144,8 @@ class Shark(Agent.Agent):
 
         if self.bougera :
 
+            self.env.grille[self.y][self.x] = None
+
             if ((self.env.grille[self.futurY][self.futurX] != None) and self.env.grille[self.futurY][self.futurX].isFish()):
                 self.env.kill(self.env.grille[self.futurY][self.futurX])
 

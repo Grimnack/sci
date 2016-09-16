@@ -27,12 +27,13 @@ class SMAWator(SMA.SMA):
                 sharks += 1
 
 
-        self.fenetre.fishStats.delete('text')        
-        self.fenetre.fishStats.create_text(100,100,text=str(fishes),tag='text')
+        self.fenetre.showTicks.delete('text')   
+        self.fenetre.fishStats.delete('text')   
+        self.fenetre.sharkStats.delete('text')      
 
-
-        self.fenetre.sharkStats.delete('text')        
-        self.fenetre.sharkStats.create_text(100,100,text=str(sharks),tag='text')
+        self.fenetre.showTicks.create_text(100,100,text='Tour n°'+str(self.nbActualTicks),tag='text') 
+        self.fenetre.fishStats.create_text(100,100,text='Poissons\n'+str(fishes),tag='text')    
+        self.fenetre.sharkStats.create_text(100,100,text='Requins\n'+str(sharks),tag='text')
 
     def theloop(self):
         super(SMAWator, self).theloop()

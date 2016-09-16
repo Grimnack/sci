@@ -77,16 +77,22 @@ class Fish(Agent.Agent):
         """
         self.age += 1
         self.color = "blue"
+
+
         if self.bougera :
+
+            self.env.grille[self.y][self.x] = None
+
             if self.naissance :
                 babyRage = Fish(self.x,self.y,self.env,self.trace,self.fishBreedTime)
                 self.env.ajouteAgent(babyRage)
                 self.naissance = False
+
             self.env.grille[self.futurY][self.futurX] = self
             self.x = self.futurX
             self.y = self.futurY
 
-        # TODO TODO TODO TODO TODO 
+        
         
     def cercle(self,fenetre,x, y, r, coul ='black'):
         '''
