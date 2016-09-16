@@ -101,19 +101,7 @@ class Shark(object):
         	self.update()
         	return
 
-
-        (self.futurX,self.futurY) = self.randomNextPos()
-        if (len(self.whereIsTheFish()) > 0):
-        	print("Miam Miam KFF")
-        	self.dontStarveCPT = self.dontStarve
-        else :
-        	self.dontStarveCPT = self.dontStarveCPT - 1
-        
-        if (isinstance(self.env.grille[futurY][futurX],Shark)) :
-            self.bougera = False
-        else :
-            self.bougera = True
-
+        #Naissance ou pas
         if self.sharkBreedTimeCPT == 0 :
             self.naissance = True
             self.sharkBreedTimeCPT = self.sharkBreedTime
@@ -121,10 +109,29 @@ class Shark(object):
             self.sharkBreedTimeCPT -= 1
 
 
+        #Pourra-t-il bouger ? 3 cas possibles
+        (self.futurX,self.futurY) = self.randomNextPos()
+
+
+        #1. Il peut manger un possion et donc aller vers lui
+        if (isinstance(self.env.grille[self.futurY][self.futurX],Fish)):
+            self.bougera = True
+            self.dontStarveCPT = self.dontStarve
+            return
+
+        #2 et 3. Qu'il bouge ou pas, s'il n'a pas vu de poisson, il a faim
+        self.dontStarveCPT = self.dontStarveCPT - 1
+        
+        #2. Un requin le bloque
+        if (isinstance(self.env.grille[self.futurY][self.futurX],Shark)) :
+            self.bougera = False
+        else :
+            #3. Case vide
+            self.bougera = True
+
+
 
     def update(self) :
-        """
-        """
 
         if self.killMe:
             self.env.kill(self)
@@ -134,10 +141,17 @@ class Shark(object):
         self.color = "red"
 
         if self.bougera :
+
+            if(isinstance(self.env.grille[self.futurY][self.futurX],Fish)):
+                self.env.kill(self.env.grille[self.futurY][self.futurX])
+
             if self.naissance :
                 self.env.grille[self.y][self.x] = Shark(self.x,self.y,self.env,self.trace,self.sharkBreedTime)
                 self.naissance = False
+
             self.env.grille[self.futurY][self.futurX] = self
+            
+
             self.x = self.futurX
             self.y = self.futurY
 
