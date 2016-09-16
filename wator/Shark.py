@@ -81,8 +81,12 @@ class Shark(object):
         for (futurX,futurY) in listePositions :
             if self.env.grille[futurY][futurX] == None :
                 continue
-            elif self.env.grille[futurY][futurX].isFish :
+            elif self.env.grille[futurY][futurX].isFish() :
                 return (futurX,futurY)
+            else : # on rencontre un requin
+                listePositions.remove((futurX,futurY))
+        if listePositions == 0 :
+            return None
 
         return listePositions[0] # qui est bien une position aléatoire
 
