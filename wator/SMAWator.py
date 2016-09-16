@@ -20,11 +20,26 @@ class SMAWator(SMA.SMA):
         super(SMAWator, self).printf()
 
         fishes = sharks = 0
+        oldFish = oldShark = 0
+        bebeFish = bebeShark = 0
+
         for agent in self.env.lesAgents:
             if agent.isFish():
                 fishes += 1
+
+                if(agent.age == 0):
+                    bebeFish += 1
+
+                if(agent.age > oldFish):
+                    oldFish = agent.age
             else:
                 sharks += 1
+
+                if(agent.age > oldShark):
+                    oldShark = agent.age
+
+                if(agent.age == 0):
+                    bebeShark += 1
 
 
         self.fenetre.showTicks.delete('text')   
@@ -32,8 +47,12 @@ class SMAWator(SMA.SMA):
         self.fenetre.sharkStats.delete('text')      
 
         self.fenetre.showTicks.create_text(100,100,text='Tour n°'+str(self.nbActualTicks),tag='text') 
-        self.fenetre.fishStats.create_text(100,100,text='Poissons\n'+str(fishes),tag='text')    
-        self.fenetre.sharkStats.create_text(100,100,text='Requins\n'+str(sharks),tag='text')
+        self.fenetre.fishStats.create_text(100,100,text='Poissons : {}\nDont nouveaux nés : {}\nPlus vieux poisson : {}'.format(fishes,bebeFish,oldFish),tag='text')    
+        self.fenetre.sharkStats.create_text(100,100,text='Requins : {}\nDont nouveaux nés : {}\nPlus vieux requin : {}'.format(sharks,bebeShark,oldShark),tag='text')
+
+        #For the wild and for gnuplot
+        if(self.trace):
+            print("{} {} {}".format(self.nbActualTicks,fishes,sharks))
 
     def theloop(self):
         super(SMAWator, self).theloop()

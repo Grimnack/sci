@@ -8,6 +8,9 @@ canvasSizeX=800
 canvasSizeY=600
 nbFish=200
 nbShark=5
+fishBreedTime=2
+sharkBreedTime=10
+sharkStarveTime=3
 
 ocean = o.Ocean(gridSizeX=gridSizeX,gridSizeY=gridSizeY,canvasSizeX=canvasSizeX,canvasSizeY=canvasSizeY)
 #ocean.tk.mainloop()
@@ -19,15 +22,12 @@ sma.SMAWator(gridSizeX=gridSizeX
     ,refresh=1
     ,scheduling="fair"
     ,nbTicks=0
-    ,trace=False
+    ,trace=True
     ,grid=True
     ,seed=None
-    ,delay=100
+    ,delay=1
     ,nbAgents=nbFish+nbShark
     ,fenetre=ocean
     ,torique=False
-    ,agentCreator=wildLife.FishAndSharkCreator(nbFish,nbShark,2,10,3)
+    ,agentCreator=wildLife.FishAndSharkCreator(nbFish,nbShark,fishBreedTime,sharkBreedTime,sharkStarveTime)
     )
-
-
-#SMA(FishandSharkCreator(a,b),nbAgents=a+b)
