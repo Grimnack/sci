@@ -50,6 +50,7 @@ class SMA(object):
         # 2. Mise à jour de l'affichage tous les refresh ticks. Si refresh = 1, l'affichage est mis à jour à chaque fin de tick.
         if(self.nbActualTicks % self.refresh) == 0 :     
             self.fenetre.can.delete("agent")
+            self.fenetre.can.delete("text")
             for agent in self.env.lesAgents :
                 agent.place_agent(self.fenetre)
 

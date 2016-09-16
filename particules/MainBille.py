@@ -25,5 +25,4 @@ SMA.SMA(gridSizeX=gridSizeX
     ,fenetre=fenetre
     ,torique=False
     ,agentCreator=bc.BilleCreator()
-    ,title="Simulation de particules"
     )
