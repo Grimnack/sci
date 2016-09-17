@@ -39,7 +39,7 @@ class SMA(object):
             agent.place_agent(self.fenetre)
             self.env.ajouteAgent(agent)
 
-        self.run()
+        
 
     def run(self):
         self.fenetre.can.after(self.delay,self.theloop)

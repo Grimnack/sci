@@ -2,8 +2,8 @@ import SMAWator as sma
 import Ocean as o
 import FishAndSharkCreator as wildLife
 
-gridSizeX=50
-gridSizeY=50
+gridSizeX=40
+gridSizeY=40
 canvasSizeX=800
 canvasSizeY=600
 nbFish=200
@@ -28,6 +28,6 @@ sma.SMAWator(gridSizeX=gridSizeX
     ,delay=1
     ,nbAgents=nbFish+nbShark
     ,fenetre=ocean
-    ,torique=False
+    ,torique=True
     ,agentCreator=wildLife.FishAndSharkCreator(nbFish,nbShark,fishBreedTime,sharkBreedTime,sharkStarveTime)
-    )
+    ).run()
