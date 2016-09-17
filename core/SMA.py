@@ -67,6 +67,9 @@ class SMA(object):
             random.shuffle(self.env.lesAgents)
             for agent in self.env.lesAgents:
                 agent.decide()
+        else:
+            for agent in self.lesAgents:
+                agent.decide()
 
         self.printf()
 
