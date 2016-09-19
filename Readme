@@ -1,8 +1,35 @@
-Attention afin de permettre une architecture sous forme de package en python :
+TP SCI n°2 - Réalisation d'un système multi-agents (SMA) de type proies-prédateurs
+
+AUTEURS : CARON Matthieu - MOEVI Alexandre (MOCAD)
+
+UTILISATION
+
+Le programme (wator/MainWator.py) utilise Python 3 et la bibliothèque tkinter ("sudo apt-get install python3-tk"). On peut vérifier l'installation de tkinter avec la commande "python3 -m tkinter" (ou "python -m tkinter").
+
+Une fois lancé, le programme ouvre une nouvelle fenêtre et affiche la simulation de l'océan. Dans le modèle qui s'éxécute, tous les agents ont la parole pendant un tick selon un scheduling équitable pendant un nombre de tours infini. 
+
+Se trouve également dans l'archive un exemple de trace sur une simulation de 1024 ticks et une image générée par gnuplot d'une simulation de 1000 tours.
+
+ATTENTION
+
+Afin de permettre une architecture sous forme de package en python :
 Commencez d'abord par ajouter le dossier sci au PYTHONPATH , sans quoi les imports ne marcheront pas.
 
 Méthode temporaire à un terminal :
-    export PYTHONPATH=$PYTHONPATH:/home/matthieu/example
+    export PYTHONPATH=$PYTHONPATH:/home/pmatthieu/example/tps/sci
+
+Méthode permanente (la même chose dans le .bash_profile ou le .bashrc)
+
+ARCHITECTURE
+
+L'archive contient 3 répertoires : core, particules et wator. particules et wator héritent tous deux de core.
 
 
-Méthode permanente (la même chose dans le bash profile ou le bashrc)
+COMPORTEMENT
+
+Il a été décidé qu'un poisson/requin nouveau né soit placé au début de la liste des agents. Ce choix a été motivé par le fait qu'une insertion en fin de liste autorise le nouveau né à agir et à devenir bleu/rouge avant même que le tour ne soit terminé. Comme l'affichage ne se met à jour qu'en fin de tour, des nouveaux nés ce tour-ci seraient affichés comme s'ils avaient déjà 1 tour ou plus d'ancienneté. 
+
+Un essai très concluant sur ces comportements a mené à environ 69000 ticks (programme arrêté par l'utilisateur) et probablement sur un équilibre du modèle. La variante comportementale est la suivante :
+- Le poisson se déplace et libère sa place précédente pour donner naissance à un poisson
+- Le requin meurt s'il n'a pas trouvé de poisson à temps. Sinon il en mange un s'il en trouve un puis donne naissance s'il le peut.
+
