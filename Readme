@@ -8,7 +8,7 @@ Le programme (wator/MainWator.py) utilise Python 3 et la bibliothèque tkinter (
 
 Une fois lancé, le programme ouvre une nouvelle fenêtre et affiche la simulation de l'océan. Dans le modèle qui s'éxécute, tous les agents ont la parole pendant un tick selon un scheduling équitable pendant un nombre de tours infini. 
 
-Se trouve également dans l'archive un exemple de trace sur une simulation de 1024 ticks et une image générée par gnuplot d'une simulation de 1000 tours.
+Se trouve également dans l'archive un exemple de trace sur une simulation de 1024 ticks (courbe.txt) et une image générée par gnuplot d'une simulation de 1000 tours. Un graphe sur la simulation de 1024 tours peut être généré dans gnuplot (load 'gnuplot.plt').
 
 ATTENTION
 
