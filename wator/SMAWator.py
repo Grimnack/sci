@@ -7,9 +7,7 @@ import time
 from tkinter import *
 
 
-FULL = """Tous les requins sont morts et les poissons ont rempli le golfe.\nFin de la simulation."""
 
-EMPTY = """Les requins ont mangé tous les poissons puis sont morts de faim.\nFin de la simulation."""
 
 
 class SMAWator(SMA.SMA):
@@ -17,6 +15,10 @@ class SMAWator(SMA.SMA):
     def __init__(self,gridSizeX,gridSizeY,canvasSizeX,canvasSizeY,delay,scheduling,grid,nbTicks,trace,seed,refresh,nbAgents,torique,agentCreator,fenetre):
         super(SMAWator, self).__init__(gridSizeX,gridSizeY,canvasSizeX,canvasSizeY,delay,scheduling,grid,nbTicks,trace,seed,refresh,nbAgents,torique,agentCreator,fenetre)
         self.fauneMax = gridSizeX * gridSizeY
+
+        self.FULL = """Tous les requins sont morts et les poissons ont rempli le golfe.\nFin de la simulation."""
+
+        self.EMPTY = """Les requins ont mangé tous les poissons puis sont morts de faim.\nFin de la simulation."""
 
     def run(self):
         super(SMAWator, self).run()
@@ -57,13 +59,13 @@ class SMAWator(SMA.SMA):
 
         if((fishes == self.fauneMax) or ((fishes == 0) and (sharks == 0))):
             toplevel = Toplevel()
-            label1 = Label(toplevel, text=FULL if (fishes == self.fauneMax) else EMPTY, height=0, width=100)
+            label1 = Label(toplevel, text=self.FULL if (fishes == self.fauneMax) else self.EMPTY, height=0, width=100)
             label1.pack()
             toplevel.focus_force()
             self.fenetre.can.destroy()
-            self.fenetre.showTicks.destroy()   
-            self.fenetre.fishStats.destroy()   
-            self.fenetre.sharkStats.destroy() 
+            #self.fenetre.showTicks.destroy()   
+            #self.fenetre.fishStats.destroy()   
+            #self.fenetre.sharkStats.destroy() 
 
         #For the wild and for gnuplot
         if(self.trace):
