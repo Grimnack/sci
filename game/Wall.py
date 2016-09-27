@@ -8,10 +8,10 @@ class Wall(Agent.Agent):
         self.y = y 
 
     def decide(self) :
-        raise NotImplementedError
+        pass
         
     def update(self) :
-        raise NotImplementedError
+        pass
 
     def place_agent(self,fenetre):
-        raise NotImplementedError
+        fenetre.can.create_rectangle(self.x*fenetre.caseX,self.y * fenetre.caseY,(self.x + 1) * fenetre.caseX,(self.y + 1) * fenetre.caseY,fill='black')
