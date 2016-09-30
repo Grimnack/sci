@@ -21,12 +21,12 @@ class Avatar(Agent.Agent):
         lesVoisins = []
         for (pasX,pasY) in self.quatreDir :
             (futurX,futurY) = (pasX + x, pasY + y)
-            if not (futurX == -1 or futurY == -1 or futurX == len(self.env.grille[0]) or futurY == len(self.env.grille)) :
-                if self.env.score[y][x] == None :
+            if not ((futurX == -1) or (futurY == -1) or (futurX == len(self.env.grille[0])) or (futurY == len(self.env.grille))) :
+                if self.env.score[futurY][futurX] == None :
                     lesVoisins.append((futurX,futurY))
         return lesVoisins
 
-    def calculScore(self) :
+    def calculeScore(self) :
         '''
         
         '''
