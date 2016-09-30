@@ -9,12 +9,41 @@ class Avatar(Agent.Agent):
         self.env = env
         self.bougera = True
         self.futurX = None
-        self.futurY = NotImplementedError
+        self.futurY = None
 
         #C'est dans la doc...
         #Peut être inutile
         self.dirX = "LUL"
         self.dirY = "xD"
+        self.quatreDir = [(0,1),(0,-1),(-1,0),(1,0)]
+
+    def getVoisins(self,x,y) :
+        lesVoisins = []
+        for (pasX,pasY) in self.quatreDir :
+            (futurX,futurY) = (pasX + x, pasY + y)
+            if not (futurX == -1 or futurY == -1 or futurX == len(self.env.grille[0]) or futurY == len(self.env.grille)) :
+                if self.env.score[y][x] == None :
+                    lesVoisins.append((futurX,futurY))
+        return lesVoisins
+
+    def calculScore(self) :
+        '''
+        
+        '''
+        self.env.score = []
+        for i in range(len(self.env.grille)) :
+            self.env.score.append([None] * len(self.env.grille[0]))
+        self.env.score[self.y][self.x] = 0
+        positions = [(self.x,self.y)]
+        while not positions == []:
+            tmp = []
+            for (x,y) in positions :
+                lesVoisins = self.getVoisins(x,y)
+                for (futurX,futurY) in lesVoisins :
+                    self.env.score[futurY][futurX] = self.env.score[y][x] + 1
+                    tmp.append((futurX,futurY))
+            positions = tmp[:]
+
 
 
     def noticeAvatar(self,dirX,dirY):
