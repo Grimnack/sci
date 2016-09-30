@@ -13,9 +13,11 @@ class Avatar(Agent.Agent):
 
         #C'est dans la doc...
         #Peut être inutile
-        self.dirX = "LUL"
-        self.dirY = "xD"
+        self.dirX = 0
+        self.dirY = 0
         self.quatreDir = [(0,1),(0,-1),(-1,0),(1,0)]
+
+        self.calculeScore()
 
     def getVoisins(self,x,y) :
         lesVoisins = []
@@ -64,11 +66,13 @@ class Avatar(Agent.Agent):
 
     def update(self) :
         if self.bougera :
-            print("({},{}) -> ({},{})".format(self.x,self.y,self.futurX,self.futurY))
+            #print("({},{}) -> ({},{})".format(self.x,self.y,self.futurX,self.futurY))
             self.env.grille[self.y][self.x] = None
             self.env.grille[self.futurY][self.futurX] = self
             self.x = self.futurX
             self.y = self.futurY
+            self.calculeScore()
+
 
     def cercle(self,fenetre,x, y, r, coul ='black'):
         '''

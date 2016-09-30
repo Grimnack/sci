@@ -4,6 +4,7 @@ from core import Window as w
 from core import SMA
 import Wall as wall
 import Avatar
+import Hunter as hunt
 import random
 import time
 from tkinter import *
@@ -21,6 +22,9 @@ class SMAGame(SMA.SMA):
                     newWall = wall.Wall(x,y)
                     self.env.ajouteAgent(newWall)
 
+        newHunter = hunt.Hunter(2,2,self.env)
+        self.env.ajouteAgent(newHunter)
+
         self.fenetre.can.focus_set()
         self.fenetre.can.bind("<Left>",self.avatarLeft)
         self.fenetre.can.bind("<Right>",self.avatarRight)
@@ -34,23 +38,23 @@ class SMAGame(SMA.SMA):
     def avatarLeft(self,event):
         #print("LEFT")
         for agent in self.env.lesAgents:
-            if (isinstance(agent,Avatar.Avatar)): #if (isinstance(agent,Avatar.Avatar)): ?
+            if (isinstance(agent,Avatar.Avatar)):
                 agent.noticeAvatar(-1,0)
 
     def avatarRight(self,event):
         #print("RIGHT")
         for agent in self.env.lesAgents:
-            if (isinstance(agent,Avatar.Avatar)): #if (isinstance(agent,Avatar.Avatar)): ?
+            if (isinstance(agent,Avatar.Avatar)): 
                 agent.noticeAvatar(1,0)
 
     def avatarUp(self,event):
         #print("UP")
         for agent in self.env.lesAgents:
-            if (isinstance(agent,Avatar.Avatar)): #if (isinstance(agent,Avatar.Avatar)): ?
+            if (isinstance(agent,Avatar.Avatar)): 
                 agent.noticeAvatar(0,-1)
 
     def avatarDown(self,event):
         #print("DOWN")
         for agent in self.env.lesAgents:
-            if (isinstance(agent,Avatar.Avatar)): #if (isinstance(agent,Avatar.Avatar)): ?
+            if (isinstance(agent,Avatar.Avatar)): 
                 agent.noticeAvatar(0,1)
