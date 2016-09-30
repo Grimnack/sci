@@ -23,8 +23,8 @@ class SMAWator(SMA.SMA):
     def run(self):
         super(SMAWator, self).run()
 
-    def printf(self):
-        super(SMAWator, self).printf()
+    def updateDisplay(self):
+        super(SMAWator, self).updateDisplay()
 
         fishes = sharks = 0
         oldFish = oldShark = 0

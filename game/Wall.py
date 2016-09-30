@@ -2,7 +2,7 @@ from core import Agent
 
 class Wall(Agent.Agent):
     """docstring for Wall"""
-    def __init__(self, arg):
+    def __init__(self, x,y):
         super(Wall, self).__init__()
         self.x = x
         self.y = y 

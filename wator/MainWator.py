@@ -17,7 +17,6 @@ sharkBreedTime=10
 sharkStarveTime=3
 
 ocean = o.Ocean(gridSizeX=gridSizeX,gridSizeY=gridSizeY,canvasSizeX=canvasSizeX,canvasSizeY=canvasSizeY)
-#ocean.tk.mainloop()
 
 sma.SMAWator(gridSizeX=gridSizeX
     ,gridSizeY=gridSizeY

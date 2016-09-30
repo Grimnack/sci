@@ -72,13 +72,13 @@ class Hunter(Agent.Agent):
             self.futurY = minY
 
 
-
-
-
-        
     def update(self) :
         if self.bougera :
             self.env.grille[self.y][self.x] = None
+
+            if ((self.env.grille[self.futurY][self.futurX] != None) and isinstance(self.env.grille[self.futurY][self.futurX],Avatar)):
+                self.env.kill(self.env.grille[self.futurY][self.futurX])
+
             self.env.grille[self.futurY][self.futurX] = self
             self.x = self.futurX
             self.y = self.futurY
