@@ -22,12 +22,9 @@ class Shark(Agent.Agent):
         self.color = "HotPink1"
 
     def isFish(self) :
-        '''
-        Ouais je sais c'est nul
-        '''
         return False
 
-    #Test ok
+    
     def genereListPasAlea(self):
         ref = [0,1,-1]
         resultat = []
@@ -39,7 +36,7 @@ class Shark(Agent.Agent):
         random.shuffle(resultat)
         return resultat
 
-    #Test ok
+    
     def pasToPosition(self,listePas) :
         '''
         transforme une liste de pas en une liste de position relative à self et l'environnement
@@ -72,9 +69,9 @@ class Shark(Agent.Agent):
 
     def randomNextPos(self):
         """
-        Légère modification je fais une exloration aléatoire non redondante du voisinnage de Moore,
-        Dès que je trouve un Fish je fonce dessus.
-        Dans le pire des cas il n'y a pas de Fish du coup je pars dans une direction aléatoire. 
+        Légère modification, exploration aléatoire non redondante du voisinnage de Moore,
+        Si le Shark trouve un Fish à proximité, il fonce dessus.
+        Sinon le Shark prend dans une direction aléatoire. 
         """
         listePas = self.genereListPasAlea()
         listePositions = self.pasToPosition(listePas)
@@ -95,7 +92,7 @@ class Shark(Agent.Agent):
         on choisis un pas random et on observe si il y a un obstacle ou pas
         """
 
-        #RIP in spaghettis, never forgetti
+        #Mort du requin s'il n'a pas mangé à temps
         if self.dontStarveCPT == 0:
         	self.killMe = True
         	self.update()
@@ -172,12 +169,3 @@ class Shark(Agent.Agent):
         
     def place_agent(self,fenetre) :
         self.cercle(fenetre, self.x*fenetre.caseX + fenetre.caseX/2, self.y * fenetre.caseY + fenetre.caseY / 2,min(fenetre.caseX,fenetre.caseY)/2 ,coul=self.color)
-
-
-##################################################################################
-
-# Tests à l'arrache
-# env = e.Environnement(5, 5,torique=False)
-# shark = Shark(1,1,env,False,None,None)
-# listePas = shark.genereListPasAlea()
-# print(shark.pasToPosition(listePas))

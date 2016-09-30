@@ -13,15 +13,30 @@ class SMAGame(SMA.SMA):
         super(SMAWator, self).__init__(gridSizeX,gridSizeY,canvasSizeX,canvasSizeY,delay,scheduling,grid,nbTicks,trace,seed,refresh,nbAgents,torique,agentCreator,fenetre)
 
         self.fenetre.can.focus_set()
-        self.fenetre.can.bind("<Left>",self.avatarLeft)
-        self.fenetre.can.bind("<Right>",self.avatarRight)
-        self.fenetre.can.bind("<Up>",self.avatarUp)
-        self.fenetre.can.bind("<Down>",self.avatarDown)
+        self.fenetre.can.bind("<Left>",self.avatarLeft())
+        self.fenetre.can.bind("<Right>",self.avatarRight())
+        self.fenetre.can.bind("<Up>",self.avatarUp())
+        self.fenetre.can.bind("<Down>",self.avatarDown())
 
     def run(self):
         super(SMAGame, self).run()
 
-    def avatarLeft(self,event):
+    def avatarLeft(self):
         for agent in self.env.lesAgents:
             if (isinstance(agent,Avatar)): #if (isinstance(agent,Avatar.Avatar)): ?
-                agent.notice(-1,0)
+                agent.noticeAvatar(-1,0)
+
+    def avatarRight(self):
+        for agent in self.env.lesAgents:
+            if (isinstance(agent,Avatar)): #if (isinstance(agent,Avatar.Avatar)): ?
+                agent.noticeAvatar(1,0)
+
+    def avatarUp(self):
+        for agent in self.env.lesAgents:
+            if (isinstance(agent,Avatar)): #if (isinstance(agent,Avatar.Avatar)): ?
+                agent.noticeAvatar(0,-1)
+
+    def avatarDown(self):
+        for agent in self.env.lesAgents:
+            if (isinstance(agent,Avatar)): #if (isinstance(agent,Avatar.Avatar)): ?
+                agent.noticeAvatar(0,1)

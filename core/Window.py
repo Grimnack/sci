@@ -4,7 +4,7 @@ from tkinter import *
 class Window(object):
     """docstring for Window"""
     def __init__(self, gridSizeX,gridSizeY,canvasSizeX,canvasSizeY,boxSize=None,windowbg='ivory',title='Simulation'):
-        #super(Window, self).__init__()
+        super(Window, self).__init__()
         self.gridSizeX = gridSizeX
         self.gridSizeY = gridSizeY
         self.canvasSizeX = canvasSizeX

@@ -46,8 +46,9 @@ class SMA(object):
         self.fenetre.can.mainloop()
 
 
-    def printf(self): #LUL
-        # 2. Mise à jour de l'affichage tous les refresh ticks. Si refresh = 1, l'affichage est mis à jour à chaque fin de tick.
+    def updateDisplay(self): 
+        # Mise à jour de l'affichage tous les refresh ticks.
+        # Si refresh = 1, l'affichage est mis à jour à chaque fin de tick.
         if(self.nbActualTicks % self.refresh) == 0 :     
             self.fenetre.can.delete("agent")
             self.fenetre.can.delete("text")
@@ -58,7 +59,7 @@ class SMA(object):
 
         self.nbActualTicks = self.nbActualTicks + 1
 
-        # 1. Les billes décident de leur nouvelles positions. L'ordre de décision est séquentiel (toujours la même balle en premier) ou aléatoire.
+        # Chaque agent décide de sa nouvelle position.
         if self.scheduling in ("chaos","unfair","rand","aleatoire","alea","aléatoire"):
             for i in range(len(self.env.lesAgents)):
                 agent = random.choice(self.env.lesAgents)
@@ -71,12 +72,9 @@ class SMA(object):
             for agent in self.lesAgents:
                 agent.decide()
 
-        self.printf()
+        self.updateDisplay()
 
-        #if self.trace:
-        #    print("Fin du tour n°"+str(self.nbActualTicks))
-
-        # 3. Terminaison
+        # Terminaison
         # 0 = infini
         # Sinon voir si on a atteint le nombre de ticks demandés par l'utilisateur
         
