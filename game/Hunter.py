@@ -9,7 +9,7 @@ class Hunter(Agent.Agent):
         self.env = env
         self.bougera = True
         self.futurX = None
-        self.futurY = NotImplementedError  
+        self.futurY = None  
         
 
     def thePositionsToWatch(self) :
@@ -84,4 +84,4 @@ class Hunter(Agent.Agent):
             self.y = self.futurY
             
     def place_agent(self,fenetre):
-        raise NotImplementedError
+        self.cercle(fenetre, self.x*fenetre.caseX + fenetre.caseX/2, self.y * fenetre.caseY + fenetre.caseY / 2,min(fenetre.caseX,fenetre.caseY)/2 ,coul='red')
