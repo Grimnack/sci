@@ -44,7 +44,6 @@ class Hunter(Agent.Agent):
         Se déplace dans le voisinage de von neuman 
         Se dirige vers la case numéroté le plus faiblement.
         """
-        print("Hunter decide")
         lesPos = self.thePositionsToWatch()
         random.shuffle(lesPos)
         minX = None
@@ -68,13 +67,11 @@ class Hunter(Agent.Agent):
             self.futurX = minX
             self.futurY = minY
 
-        print("Hunter : ({},{}) -> ({},{})".format(self.x,self.y,self.futurX,self.futurY))
         self.update()
 
 
 
     def update(self) :
-        print("Hunter update")
         if self.bougera :
             #print("Hunter : ({},{}) -> ({},{})".format(self.x,self.y,self.futurX,self.futurY))
             self.env.grille[self.y][self.x] = None

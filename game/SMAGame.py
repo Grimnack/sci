@@ -22,6 +22,15 @@ class SMAGame(SMA.SMA):
                     newWall = wall.Wall(x,y)
                     self.env.ajouteAgent(newWall)
 
+        newWall = wall.Wall(20,20)
+        self.env.ajouteAgent(newWall)
+        newWall = wall.Wall(20,21)
+        self.env.ajouteAgent(newWall)
+        newWall = wall.Wall(21,20)
+        self.env.ajouteAgent(newWall)
+        newWall = wall.Wall(21,21)
+        self.env.ajouteAgent(newWall)
+        
         newHunter = hunt.Hunter(2,2,self.env)
         self.env.ajouteAgent(newHunter)
 
