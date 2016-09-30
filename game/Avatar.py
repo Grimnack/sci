@@ -24,7 +24,7 @@ class Avatar(Agent.Agent):
     def decide(self):
         
         (self.futurX,self.futurY) = (self.x + self.dirX, self.y + self.dirY)
-        print("nextPos ({},{})".format(self.futurX,self.futurY))
+        
         #TO DO : Option pour l'environnement torique
 
         if (self.env.grille[self.futurY][self.futurX] == None):
@@ -32,9 +32,12 @@ class Avatar(Agent.Agent):
         else:
             self.bougera = False
 
+        self.update()
+
 
     def update(self) :
         if self.bougera :
+            print("({},{}) -> ({},{})".format(self.x,self.y,self.futurX,self.futurY))
             self.env.grille[self.y][self.x] = None
             self.env.grille[self.futurY][self.futurX] = self
             self.x = self.futurX

@@ -32,25 +32,25 @@ class SMAGame(SMA.SMA):
         super(SMAGame, self).run()
 
     def avatarLeft(self,event):
-        print("LEFT")
+        #print("LEFT")
         for agent in self.env.lesAgents:
             if (isinstance(agent,Avatar.Avatar)): #if (isinstance(agent,Avatar.Avatar)): ?
                 agent.noticeAvatar(-1,0)
 
     def avatarRight(self,event):
-        print("RIGHT")
+        #print("RIGHT")
         for agent in self.env.lesAgents:
             if (isinstance(agent,Avatar.Avatar)): #if (isinstance(agent,Avatar.Avatar)): ?
                 agent.noticeAvatar(1,0)
 
     def avatarUp(self,event):
-        print("UP")
+        #print("UP")
         for agent in self.env.lesAgents:
             if (isinstance(agent,Avatar.Avatar)): #if (isinstance(agent,Avatar.Avatar)): ?
                 agent.noticeAvatar(0,-1)
 
     def avatarDown(self,event):
-        print("DOWN")
+        #print("DOWN")
         for agent in self.env.lesAgents:
             if (isinstance(agent,Avatar.Avatar)): #if (isinstance(agent,Avatar.Avatar)): ?
                 agent.noticeAvatar(0,1)

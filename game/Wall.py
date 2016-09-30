@@ -14,4 +14,4 @@ class Wall(Agent.Agent):
         pass
 
     def place_agent(self,fenetre):
-        fenetre.can.create_rectangle(self.x*fenetre.caseX,self.y * fenetre.caseY,(self.x + 1) * fenetre.caseX,(self.y + 1) * fenetre.caseY,fill='black')
+        fenetre.can.create_rectangle(self.x*fenetre.caseX,self.y * fenetre.caseY,(self.x + 1) * fenetre.caseX,(self.y + 1) * fenetre.caseY,fill='black', tag='agent')
