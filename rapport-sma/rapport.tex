@@ -24,9 +24,25 @@
 \maketitle
 
 \section{Architecture et utilisation}
+Pour réaliser les différents simulations, il a été décidé d'utiliser la langage Python 3, et non Java 7/8. 
 
-\subsection{UMLUL}
-\url{http://modeling-languages.com/uml-tools/#python}
+\subsection{Paquetage \texttt{core}}
+Avant d'expliquer les trois simulations effectuées, il est nécessaire de présenter le paquetage \texttt{core}. \texttt{core} contient la description générique des objets nécessaires à la mise d'un SMA (système multi-agents). Le paquetage contient cinq classes.
+ 
+\medskip
+La classe \texttt{Agent} qui représente un agent du système. Placé dans un \texttt{Environnement}, il connaît ses coordonnées (\texttt{self.x} et \texttt{self.x} en Python, qui correspondent à \texttt{this.x} et \texttt{this.y} en Java). Quand le \texttt{SMA} lui \og donne la parole \fg{}, l'agent décide en fonction de stratégie (méthode \texttt{self.decide()}) puis se met à jour dans son environnement (\texttt{self.update()}). L'agent possède également une méthode \texttt{place\_agent()} qui concerne son affichage dans la fenêtre (classe \texttt{Window}).
+
+\medskip
+La classe \texttt{AgentCreator} génère un ou plusieurs \texttt{Agent} du système. Il peut créer un seul type d'agent (uniquement des billes) ou plusieurs types d'agents (poissons et requins).
+
+\medskip
+La classe \texttt{Environnement} représente l'espace du système sous forme de grille. Cette grille contient l'ensemble des agents et leur coordonnées. L'environnement peut être torique ou non. 
+
+\medskip
+La classe \texttt{SMA} contient la méthode \texttt{run()} qui effectue le tour de parole (ou tick). Dans un tick, le \texttt{SMA} appelle un ou plusieurs agents avec la méthode \texttt{agent.decide()} en fonction du scheduling (\texttt{self.scheduling}). Le scheduling peut être séquentiel, équitable ou aléatoire. Un fois le tour fini, l'affichage est mis à jour avec la méthode \texttt{SMA.updateDisplay()}.
+
+\medskip
+La classe \texttt{Window} concerne tout ce qui l'affichage. En se basant sur la bibliothèque graphique \href{https://wiki.python.org/moin/TkInter}{Tkinter}, la classe permet l'affichage du système et l'affichage d'une grille si l'utilisateur le souhaite.
 
 \subsection{Usage}
 
@@ -70,10 +86,6 @@ Comme pour l'agent \texttt{Bille} de la simulation précédente, les agents \tex
 
 \medskip
 Avec ces paramètres, le but est de trouver d'atteindre une situation d'équilibre. On veut éviter une pénurie de poissons (plus de poissons = mort des requins affamés = zone vierge de tout animal) et une absence de requins (les poissons vont se reproduire jusqu'à remplir entièrement la zone).
-
-\medskip
-La stratégie d'une 
-
 
  
 \begin{figure}[!h]

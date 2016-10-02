@@ -36,6 +36,18 @@ class SMAGame(SMA.SMA):
         newHunter = hunt.Hunter(2,2,self.env)
         self.env.ajouteAgent(newHunter)
 
+        newHunter = hunt.Hunter(3,3,self.env)
+        self.env.ajouteAgent(newHunter)
+
+        newHunter = hunt.Hunter(2,3,self.env)
+        self.env.ajouteAgent(newHunter)
+
+        newHunter = hunt.Hunter(3,2,self.env)
+        self.env.ajouteAgent(newHunter)
+
+        newHunter = hunt.Hunter(40,40,self.env)
+        self.env.ajouteAgent(newHunter)
+
         self.fenetre.can.focus_set()
         self.fenetre.can.bind("<Left>",self.avatarLeft)
         self.fenetre.can.bind("<Right>",self.avatarRight)
@@ -64,25 +76,21 @@ class SMAGame(SMA.SMA):
         super(SMAGame, self).run()
 
     def avatarLeft(self,event):
-        #print("LEFT")
         for agent in self.env.lesAgents:
             if (isinstance(agent,Avatar.Avatar)):
                 agent.noticeAvatar(-1,0)
 
     def avatarRight(self,event):
-        #print("RIGHT")
         for agent in self.env.lesAgents:
             if (isinstance(agent,Avatar.Avatar)): 
                 agent.noticeAvatar(1,0)
 
     def avatarUp(self,event):
-        #print("UP")
         for agent in self.env.lesAgents:
             if (isinstance(agent,Avatar.Avatar)): 
                 agent.noticeAvatar(0,-1)
 
     def avatarDown(self,event):
-        #print("DOWN")
         for agent in self.env.lesAgents:
             if (isinstance(agent,Avatar.Avatar)): 
                 agent.noticeAvatar(0,1)
