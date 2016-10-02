@@ -4,7 +4,7 @@
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{fontspec}
-\usepackage[textwidth=17cm,textheight=27cm]{geometry}
+%\usepackage[textwidth=17cm,textheight=27cm]{geometry}
 
 %\setlength{\textwidth}{420 pt} 
 %\usepackage{amsmath}
@@ -24,7 +24,15 @@
 \maketitle
 
 \section{Architecture et utilisation}
-Pour réaliser les différents simulations, il a été décidé d'utiliser la langage Python 3, et non Java 7/8. 
+
+\subsection{Usage}
+Pour réaliser les différents simulations, il a été décidé d'utiliser la langage Python 3 et la bibliothèque graphique \href{https://wiki.python.org/moin/TkInter}{\texttt{Tkinter}}. On peut vérifier l'installation de Tkinter en lançant la commande \texttt{python3 -m tkinter} (ou \texttt{python -m tkinter}) ou l'installer avec \texttt{sudo apt-get install python3-tk} (ou chercher le nom du paquet avec \texttt{sudo apt-cache search tk}).
+
+\medskip
+Afin de permettre une architecture sous forme de paquetage en Python, il faut modifier la variable d'environnement \texttt{\$PYTHONPATH} en ajoutant le chemin vers le répertoire \texttt{sci} (\texttt{export PYTHONPATH=\$PYTHONPATH:/home/pmatthieu/example/tps/sci}). sans quoi les imports ne marcheront pas. Cette modification peut être faite dans un terminal (méthode temporaire) ou directement dans les fichiers \texttt{.bashrc} et/ou \texttt{.bash\_profile}.
+
+\medskip
+modifier les paramètres dans MainXXX.py, etc.
 
 \subsection{Paquetage \texttt{core}}
 Avant d'expliquer les trois simulations effectuées, il est nécessaire de présenter le paquetage \texttt{core}. \texttt{core} contient la description générique des objets nécessaires à la mise d'un SMA (système multi-agents). Le paquetage contient cinq classes.
@@ -42,11 +50,8 @@ La classe \texttt{Environnement} représente l'espace du système sous forme de 
 La classe \texttt{SMA} contient la méthode \texttt{run()} qui effectue le tour de parole (ou tick). Dans un tick, le \texttt{SMA} appelle un ou plusieurs agents avec la méthode \texttt{agent.decide()} en fonction du scheduling (\texttt{self.scheduling}). Le scheduling peut être séquentiel, équitable ou aléatoire. Un fois le tour fini, l'affichage est mis à jour avec la méthode \texttt{SMA.updateDisplay()}.
 
 \medskip
-La classe \texttt{Window} concerne tout ce qui l'affichage. En se basant sur la bibliothèque graphique \href{https://wiki.python.org/moin/TkInter}{Tkinter}, la classe permet l'affichage du système et l'affichage d'une grille si l'utilisateur le souhaite.
+La classe \texttt{Window} concerne tout ce qui l'affichage. En se basant sur la bibliothèque graphique \texttt{Tkinter}, la classe permet l'affichage du système et l'affichage d'une grille si l'utilisateur le souhaite.
 
-\subsection{Usage}
-
-\$PYTHONPATH, python3, modifier les paramètres dans MainXXX.py, etc.
 \section{Simulations}
 
 \subsection{Tube à particules}
