@@ -90,6 +90,8 @@ class SMAGame(SMA.SMA):
         hunters = 0
         avatarSpeed = 0
         hunterSpeed = 0
+        defendersEaten = 0 
+        enoughDefenders = 0
         winner = False
 
         for agent in self.env.lesAgents:
@@ -106,13 +108,6 @@ class SMAGame(SMA.SMA):
                 hunterSpeed = 1 / agent.pace
                 continue
 
-
-        self.fenetre.score.delete('text')
-        self.fenetre.debug.delete('text')      
-
-        self.fenetre.score.create_text(100,100,text="Score : {} / {} Defender".format(defendersEaten,enoughDefenders),tag='text')
-        self.fenetre.debug.create_text(100,100,text="Vitesse de l'avatar : {}%\nVitesse des chasseurs : {}%\nInvincibility : {}".format(round(avatarSpeed * 100,2),round(hunterSpeed * 100,2),invincibility),tag='text') 
-
         if((avatar == 0) or (hunters == 0) or winner):
             if (avatar == 0):
                 popup = self.NOAVATAR
@@ -125,6 +120,12 @@ class SMAGame(SMA.SMA):
             label1.pack()
             toplevel.focus_force()
             self.fenetre.can.destroy()
+
+        self.fenetre.score.delete('text')
+        self.fenetre.debug.delete('text')      
+
+        self.fenetre.score.create_text(100,100,text="Score : {} / {} Defender".format(defendersEaten,enoughDefenders),tag='text')
+        self.fenetre.debug.create_text(100,100,text="Vitesse de l'avatar : {}%\nVitesse des chasseurs : {}%\nInvincibility : {}".format(round(avatarSpeed * 100,2),round(hunterSpeed * 100,2),invincibility),tag='text') 
 
     def avatarLeft(self,event):
         for agent in self.env.lesAgents:

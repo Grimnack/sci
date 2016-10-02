@@ -12,12 +12,12 @@ gridSizeY=50
 canvasSizeX=800
 canvasSizeY=600
 
-nbWalls = 0
+nbWalls = 500
 nbHunters = 10
 hunterSpeed = 6
 avatarSpeed = 3
 
-enoughDefenders = 8
+enoughDefenders = 4
 defenderLife = 100
 
 initGame = ga.GameAgentCreator(gridSizeX,gridSizeY,nbWalls,nbHunters,hunterSpeed,avatarSpeed,enoughDefenders)
