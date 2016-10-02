@@ -1,4 +1,5 @@
 from core import Agent
+import Hunter
 
 class Avatar(Agent.Agent):
 
@@ -58,12 +59,18 @@ class Avatar(Agent.Agent):
 
     def decide(self):
         # print("Avatar decide")
-        print(self.env.score)
+        #print(self.env.score)
         (self.futurX,self.futurY) = (self.x + self.dirX, self.y + self.dirY)
-        
-        #TO DO : Option pour l'environnement torique
 
-        if (self.env.grille[self.futurY][self.futurX] == None):
+        if self.env.torique:
+            print("#TO DO : Option pour l'environnement torique")
+        else :
+            if ((self.futurY == -1) or (self.futurY == len(self.env.grille)) or (self.futurX == -1) or (self.futurX == len(self.env.grille[0]))) :
+                self.bougera = False
+                self.update()
+                return
+
+        if ((self.env.grille[self.futurY][self.futurX] == None) or isinstance(self.env.grille[self.futurY][self.futurX],Hunter.Hunter)):
             self.bougera = True
         else:
             self.bougera = False
@@ -74,11 +81,20 @@ class Avatar(Agent.Agent):
     def update(self) :
         if self.bougera :
             #print("({},{}) -> ({},{})".format(self.x,self.y,self.futurX,self.futurY))
+
+            #Vitesse du Hunter
+            #Suicide
+            if ((self.env.grille[self.futurY][self.futurX] != None) and isinstance(self.env.grille[self.futurY][self.futurX],Hunter.Hunter)):
+                self.env.kill(self)
+                return
+
             self.env.grille[self.y][self.x] = None
             self.env.grille[self.futurY][self.futurX] = self
             self.x = self.futurX
             self.y = self.futurY
             self.calculeScore()
+
+
 
 
     def cercle(self,fenetre,x, y, r, coul ='black'):

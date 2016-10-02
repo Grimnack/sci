@@ -4,7 +4,7 @@ from core import Window as w
 from core import SMA
 import Wall as wall
 import Avatar
-import Hunter as hunt
+import Hunter
 import random
 import time
 from tkinter import *
@@ -36,23 +36,13 @@ class SMAGame(SMA.SMA):
         # newHunter = hunt.Hunter(2,2,self.env)
         # self.env.ajouteAgent(newHunter)
 
-        newHunter = hunt.Hunter(3,3,self.env)
-        self.env.ajouteAgent(newHunter)
-
-        newHunter = hunt.Hunter(2,3,self.env)
-        self.env.ajouteAgent(newHunter)
-
-        newHunter = hunt.Hunter(3,2,self.env)
-        self.env.ajouteAgent(newHunter)
-
-        newHunter = hunt.Hunter(40,40,self.env)
-        self.env.ajouteAgent(newHunter)
-
         self.fenetre.can.focus_set()
         self.fenetre.can.bind("<Left>",self.avatarLeft)
         self.fenetre.can.bind("<Right>",self.avatarRight)
         self.fenetre.can.bind("<Up>",self.avatarUp)
         self.fenetre.can.bind("<Down>",self.avatarDown)
+        self.fenetre.can.bind("a",self.speedUpHunter)
+        self.fenetre.can.bind("z",self.speedDownHunter)
         self.fenetre.can.pack()
 
     def updateDisplay(self):
@@ -94,3 +84,16 @@ class SMAGame(SMA.SMA):
         for agent in self.env.lesAgents:
             if (isinstance(agent,Avatar.Avatar)): 
                 agent.noticeAvatar(0,1)
+
+    def speedUpHunter(self,event):
+        for agent in self.env.lesAgents:
+            if isinstance(agent,Hunter.Hunter):
+                if(agent.pace <= 1):
+                    agent.pace = 1
+                else:
+                    agent.pace -= 1
+
+    def speedDownHunter(self,event):
+        for agent in self.env.lesAgents:
+            if isinstance(agent,Hunter.Hunter):
+                agent.pace += 1

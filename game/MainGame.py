@@ -11,11 +11,11 @@ gridSizeY=50
 canvasSizeX=800
 canvasSizeY=600
 
-nbWalls = 50
+nbWalls = 512
 nbHunters = 3
+hunterSpeed = 10
 
-
-initGame = ga.GameAgentCreator(gridSizeX,gridSizeY,nbWalls,nbHunters)
+initGame = ga.GameAgentCreator(gridSizeX,gridSizeY,nbWalls,nbHunters,hunterSpeed=hunterSpeed)
 fenetre = w.Window(gridSizeX=gridSizeX,gridSizeY=gridSizeY,canvasSizeX=canvasSizeX,canvasSizeY=canvasSizeY,boxSize=None,windowbg='black',title="Simulation de particules")
 
 sma.SMAGame(gridSizeX=gridSizeX
@@ -28,9 +28,9 @@ sma.SMAGame(gridSizeX=gridSizeX
     ,trace=False
     ,grid=False
     ,seed=None
-    ,delay=200
+    ,delay=100
     ,nbAgents=nbHunters + nbWalls+ 1#initGame.nbAgents()
     ,fenetre=fenetre
-    ,torique=True
+    ,torique=False
     ,agentCreator=initGame
     ).run()

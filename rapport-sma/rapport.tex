@@ -26,10 +26,13 @@
 \section{Architecture et utilisation}
 
 \subsection{Usage}
+
+En ouvrant l'archive, on peut constater dans le la présence de 4 répertoires : un \texttt{core} qui contient la base d'un système multi-agents et un pour chaque simulation (\texttt{particules}, \texttt{wator} et \texttt{game}). Chacun des trois simulations contient une classe Main pour lancer le programme.
+
 Pour réaliser les différents simulations, il a été décidé d'utiliser la langage Python 3 et la bibliothèque graphique \href{https://wiki.python.org/moin/TkInter}{\texttt{Tkinter}}. On peut vérifier l'installation de Tkinter en lançant la commande \texttt{python3 -m tkinter} (ou \texttt{python -m tkinter}) ou l'installer avec \texttt{sudo apt-get install python3-tk} (ou chercher le nom du paquet avec \texttt{sudo apt-cache search tk}).
 
 \medskip
-Afin de permettre une architecture sous forme de paquetage en Python, il faut modifier la variable d'environnement \texttt{\$PYTHONPATH} en ajoutant le chemin vers le répertoire \texttt{sci} (\texttt{export PYTHONPATH=\$PYTHONPATH:/home/pmatthieu/example/tps/sci}). sans quoi les imports ne marcheront pas. Cette modification peut être faite dans un terminal (méthode temporaire) ou directement dans les fichiers \texttt{.bashrc} et/ou \texttt{.bash\_profile}.
+Afin de permettre une architecture sous forme de paquetage en Python, il faut modifier la variable d'environnement \texttt{\$PYTHONPATH} en ajoutant le chemin vers le répertoire \texttt{sci} (\texttt{export PYTHONPATH=\$PYTHONPATH:/home/pmatthieu/example/tps/sci-caron-moevi}). sans quoi les imports ne marcheront pas. Cette modification peut être faite dans un terminal (méthode temporaire) ou directement dans les fichiers \texttt{.bashrc} et/ou \texttt{.bash\_profile}.
 
 \medskip
 modifier les paramètres dans MainXXX.py, etc.

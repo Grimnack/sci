@@ -4,14 +4,18 @@ import random
 
 class Hunter(Agent.Agent):
     """docstring for Hunter"""
-    def __init__(self, x,y,env):
+    def __init__(self, x,y,env,pace=3):
         super(Hunter, self).__init__()
         self.x = x
         self.y = y
         self.env = env
         self.bougera = True
         self.futurX = None
-        self.futurY = None  
+        self.futurY = None 
+
+        #Vitesse du Hunter
+        self.pace = pace
+        self.paceCPT = 0 
         
     def isWall(self) :
         return False
@@ -49,7 +53,13 @@ class Hunter(Agent.Agent):
         Se déplace dans le voisinage de von neuman 
         Se dirige vers la case numéroté le plus faiblement.
         """
-        print("Hunter decide")
+
+        #Vitese du Hunter
+        if ((self.paceCPT % self.pace) > 0):
+            self.update()
+            self.bougera = False
+            return
+        
         lesPos = self.thePositionsToWatch()
         random.shuffle(lesPos)
         minX = None
@@ -84,6 +94,10 @@ class Hunter(Agent.Agent):
 
 
     def update(self) :
+
+        #Vitesse du Hunter
+        self.paceCPT += 1
+
         if self.bougera :
             #print("Hunter : ({},{}) -> ({},{})".format(self.x,self.y,self.futurX,self.futurY))
             self.env.grille[self.y][self.x] = None
