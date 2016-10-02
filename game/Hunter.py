@@ -13,6 +13,8 @@ class Hunter(Agent.Agent):
         self.futurX = None
         self.futurY = None  
         
+    def isWall(self) :
+        return False
 
     def thePositionsToWatch(self) :
         nord = (self.x,self.y-1)
@@ -51,6 +53,8 @@ class Hunter(Agent.Agent):
         minScore = None
         for (x,y) in lesPos :    
             score = self.env.score[y][x]
+            if score == None :
+                continue
             if minScore == None :
                 if score < self.env.score[self.y][self.x] :
                     minScore = score

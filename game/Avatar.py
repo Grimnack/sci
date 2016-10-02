@@ -19,6 +19,9 @@ class Avatar(Agent.Agent):
 
         self.calculeScore()
 
+    def isWall(self) :
+        return False
+
     def getVoisins(self,x,y) :
         lesVoisins = []
         for (pasX,pasY) in self.quatreDir :
@@ -42,8 +45,9 @@ class Avatar(Agent.Agent):
             for (x,y) in positions :
                 lesVoisins = self.getVoisins(x,y)
                 for (futurX,futurY) in lesVoisins :
-                    self.env.score[futurY][futurX] = self.env.score[y][x] + 1
-                    tmp.append((futurX,futurY))
+                    if self.env.grille[futurY][futurX] == None or not self.env.grille[futurY][futurX].isWall:
+                        self.env.score[futurY][futurX] = self.env.score[y][x] + 1
+                        tmp.append((futurX,futurY))
             positions = tmp[:]
 
     def noticeAvatar(self,dirX,dirY):

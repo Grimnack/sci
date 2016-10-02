@@ -7,6 +7,9 @@ class Wall(Agent.Agent):
         self.x = x
         self.y = y 
 
+    def isWall(self) :
+        return False
+
     def decide(self) :
         pass
         
