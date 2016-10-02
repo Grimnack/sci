@@ -35,7 +35,7 @@
 
 \subsection{Tube à particules}
 
-La première simulation, le paquetage \textit{particules}, reproduit le comportement de billes (ou particules) dans un espace. Cet espace peut torique ou non ; s'il ne l'est pas, les particules rebondissent contre les murs. Les particules rebondissent également en collision.
+La première simulation, le paquetage \texttt{particules}, reproduit le comportement de billes (ou particules) dans un espace. Cet espace peut torique ou non ; s'il ne l'est pas, les particules rebondissent contre les murs. Les particules rebondissent également en collision.
 
 \medskip
 La classe \texttt{Bille} hérite la classe \texttt{Agent} du paquetage \texttt{core}. L'agent \texttt{Bille} connaît son environnement, sa position (entiers \texttt{x} et \texttt{y}) et sa direction (vecteur à 2 dimensions \texttt{[a, b]}).
@@ -57,11 +57,28 @@ Dans le cas d'une collision (\texttt{particule1.collision(particule2)}), la bill
 \caption{Fenêtre d'exécution du programme \texttt{MainBille}. Les billes sont assignées d'une couleur aléatoire et d'un identifiant pour faciliter leur suivi.}
 \end{figure}
 \subsection{Poissons et requins dans le golfe (du Bénin)}
-What
+La deuxième simulation concerne le paquetage \texttt{wator}. Elle a pour but de voir comment des poissons (les agents \texttt{Fish} dans notre simulation) et des requins (agents \texttt{Shark}) cohabitent dans une zone. 
+
+\medskip
+Un agent \texttt{Fish} se déplace de façon aléatoire et se reproduit tous les \texttt{fishBreedTime} ticks. Pour se reproduire, le poisson doit se déplacer et donne naissance à un autre poisson sur la case où il était précédemment.
+
+\medskip
+Un \texttt{Shark} est affamé, il a \texttt{dontStarve} ticks pour manger un \texttt{Fish}. S'il n'y arrive pas à temps, il meurt. À l'instar du poisson, il peut se reproduire tous les \texttt{sharkBreedTime} et donne naissance à un nouveau requin sur la case qu'il occupait avant.
+
+\medskip
+Comme pour l'agent \texttt{Bille} de la simulation précédente, les agents \texttt{Fish} et \texttt{Shark} ont conscience de leur environnement et connaissent leur coordonnées dans l'espace.
+
+\medskip
+Avec ces paramètres, le but est de trouver d'atteindre une situation d'équilibre. On veut éviter une pénurie de poissons (plus de poissons = mort des requins affamés = zone vierge de tout animal) et une absence de requins (les poissons vont se reproduire jusqu'à remplir entièrement la zone).
+
+\medskip
+La stratégie d'une 
+
+
  
 \begin{figure}[!h]
 \centering
-\includegraphics[height=10cm]{1000tours.png}
+\includegraphics[height=7cm]{1000tours.png}
 \caption{Courbes de population.}
 \end{figure}
 

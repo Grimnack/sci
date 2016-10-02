@@ -60,11 +60,11 @@ class Hunter(Agent.Agent):
                 if not self.env.grille[y][x].isAvatar() :
                     continue    
             score = self.env.score[y][x]
-            if self.env.score[self.y][self.x] == None :
+            if self.env.score[y][x] == None :
                 # Ici on ne va pas dans un mur
                 continue
             if minScore == None :
-                if score <= self.env.score[self.y][self.x] :
+                if score <= self.env.score[y][x] :
                     minScore = score
                     minX = x
                     minY = y
