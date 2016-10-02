@@ -64,7 +64,7 @@ class Hunter(Agent.Agent):
                 # Ici on ne va pas dans un mur
                 continue
             if minScore == None :
-                if score < self.env.score[self.y][self.x] :
+                if score <= self.env.score[self.y][self.x] :
                     minScore = score
                     minX = x
                     minY = y
