@@ -9,6 +9,8 @@ class Wall(Agent.Agent):
 
     def isWall(self) :
         return False
+    def isAvatar(self) :
+        return False
 
     def decide(self) :
         pass

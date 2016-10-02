@@ -21,6 +21,8 @@ class Avatar(Agent.Agent):
 
     def isWall(self) :
         return False
+    def isAvatar(self) :
+        return True
 
     def getVoisins(self,x,y) :
         lesVoisins = []
@@ -55,7 +57,8 @@ class Avatar(Agent.Agent):
         self.dirY = dirY
 
     def decide(self):
-        
+        # print("Avatar decide")
+        print(self.env.score)
         (self.futurX,self.futurY) = (self.x + self.dirX, self.y + self.dirY)
         
         #TO DO : Option pour l'environnement torique

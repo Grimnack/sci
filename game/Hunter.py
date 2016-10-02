@@ -16,6 +16,9 @@ class Hunter(Agent.Agent):
     def isWall(self) :
         return False
 
+    def isAvatar(self) :
+        return False
+
     def thePositionsToWatch(self) :
         nord = (self.x,self.y-1)
         sud = (self.x,self.y+1)
@@ -46,14 +49,19 @@ class Hunter(Agent.Agent):
         Se déplace dans le voisinage de von neuman 
         Se dirige vers la case numéroté le plus faiblement.
         """
+        print("Hunter decide")
         lesPos = self.thePositionsToWatch()
         random.shuffle(lesPos)
         minX = None
         minY = None
         minScore = None
-        for (x,y) in lesPos :    
+        for (x,y) in lesPos :
+            if not (self.env.grille[y][x] == None) :
+                if not self.env.grille[y][x].isAvatar() :
+                    continue    
             score = self.env.score[y][x]
-            if score == None :
+            if self.env.score[self.y][self.x] == None :
+                # Ici on ne va pas dans un mur
                 continue
             if minScore == None :
                 if score < self.env.score[self.y][self.x] :
