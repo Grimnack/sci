@@ -16,7 +16,7 @@ nbHunters = 3
 
 
 initGame = ga.GameAgentCreator(gridSizeX,gridSizeY,nbWalls,nbHunters)
-fenetre = w.Window(gridSizeX=gridSizeX,gridSizeY=gridSizeY,canvasSizeX=canvasSizeX,canvasSizeY=canvasSizeY,boxSize=None,windowbg='ivory',title="Simulation de particules")
+fenetre = w.Window(gridSizeX=gridSizeX,gridSizeY=gridSizeY,canvasSizeX=canvasSizeX,canvasSizeY=canvasSizeY,boxSize=None,windowbg='black',title="Simulation de particules")
 
 sma.SMAGame(gridSizeX=gridSizeX
     ,gridSizeY=gridSizeY
