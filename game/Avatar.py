@@ -62,8 +62,15 @@ class Avatar(Agent.Agent):
         #print(self.env.score)
         (self.futurX,self.futurY) = (self.x + self.dirX, self.y + self.dirY)
 
-        if self.env.torique:
-            print("#TO DO : Option pour l'environnement torique")
+        if self.env.torique :
+            if self.futurY == -1 :
+                self.futurY = len(self.env.grille)-1
+            if self.futurY == len(self.env.grille) :
+                self.futurY = 0
+            if self.futurX == -1 :
+                self.futurX = len(self.env.grille[0]) -1
+            if self.futurX == len(self.env.grille[0]) :
+                self.futurX = 0
         else :
             if ((self.futurY == -1) or (self.futurY == len(self.env.grille)) or (self.futurX == -1) or (self.futurX == len(self.env.grille[0]))) :
                 self.bougera = False

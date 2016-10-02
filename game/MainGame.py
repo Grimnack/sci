@@ -11,7 +11,7 @@ gridSizeY=50
 canvasSizeX=800
 canvasSizeY=600
 
-nbWalls = 512
+nbWalls = 0
 nbHunters = 3
 hunterSpeed = 10
 
@@ -31,6 +31,6 @@ sma.SMAGame(gridSizeX=gridSizeX
     ,delay=100
     ,nbAgents=nbHunters + nbWalls+ 1#initGame.nbAgents()
     ,fenetre=fenetre
-    ,torique=False
+    ,torique=True
     ,agentCreator=initGame
     ).run()
