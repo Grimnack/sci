@@ -6,7 +6,7 @@ import Winner
 
 class Avatar(Agent.Agent):
 
-    def __init__(self, x,y,env,pace):
+    def __init__(self, x,y,env,pace,enoughDefenders=4):
         super(Avatar, self).__init__()
         self.x = x
         self.y = y
@@ -23,7 +23,7 @@ class Avatar(Agent.Agent):
         self.invincibilityCPT = 0
 
         self.defendersEaten = 0
-        self.enoughDefenders = 4
+        self.enoughDefenders = enoughDefenders
         self.hasWon = False
 
         self.pace = pace
