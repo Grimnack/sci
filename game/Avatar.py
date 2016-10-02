@@ -1,9 +1,12 @@
 from core import Agent
+import Wall
 import Hunter
+import Defender
+import Winner
 
 class Avatar(Agent.Agent):
 
-    def __init__(self, x,y,env):
+    def __init__(self, x,y,env,pace):
         super(Avatar, self).__init__()
         self.x = x
         self.y = y
@@ -12,11 +15,19 @@ class Avatar(Agent.Agent):
         self.futurX = None
         self.futurY = None
 
-        #C'est dans la doc...
-        #Peut être inutile
         self.dirX = 0
         self.dirY = 0
         self.quatreDir = [(0,1),(0,-1),(-1,0),(1,0)]
+
+        self.invincibility = False
+        self.invincibilityCPT = 0
+
+        self.defendersEaten = 0
+        self.enoughDefenders = 4
+        self.hasWon = False
+
+        self.pace = pace
+        self.paceCPT = 0 
 
         self.calculeScore()
 
@@ -58,8 +69,12 @@ class Avatar(Agent.Agent):
         self.dirY = dirY
 
     def decide(self):
-        # print("Avatar decide")
-        #print(self.env.score)
+        
+        if ((self.paceCPT % self.pace) > 0):
+            self.update()
+            self.bougera = False
+            return
+
         (self.futurX,self.futurY) = (self.x + self.dirX, self.y + self.dirY)
 
         if self.env.torique :
@@ -77,31 +92,57 @@ class Avatar(Agent.Agent):
                 self.update()
                 return
 
-        if ((self.env.grille[self.futurY][self.futurX] == None) or isinstance(self.env.grille[self.futurY][self.futurX],Hunter.Hunter)):
-            self.bougera = True
-        else:
+        if (isinstance(self.env.grille[self.futurY][self.futurX],Wall.Wall)):
             self.bougera = False
+        else:
+            self.bougera = True
 
         self.update()
 
 
     def update(self) :
-        if self.bougera :
-            #print("({},{}) -> ({},{})".format(self.x,self.y,self.futurX,self.futurY))
 
-            #Vitesse du Hunter
-            #Suicide
+        self.paceCPT += 1
+
+        if(self.invincibility):
+            if(self.invincibilityCPT == 0):
+                self.invincibility = False
+                for agent in self.env.lesAgents:
+                    if(isinstance(agent,Hunter.Hunter)):
+                        agent.doitFuir = False  
+
+        if(self.invincibility > 0):
+            self.invincibilityCPT -= 1
+
+        if self.bougera :
+
             if ((self.env.grille[self.futurY][self.futurX] != None) and isinstance(self.env.grille[self.futurY][self.futurX],Hunter.Hunter)):
-                self.env.kill(self)
-                return
+                chasseur = self.env.grille[self.futurY][self.futurX]
+                if(chasseur.doitFuir):
+                    self.env.kill(chasseur)
+                else:
+                    self.env.kill(self)
+                    return
+
+            if ((self.env.grille[self.futurY][self.futurX] != None) and isinstance(self.env.grille[self.futurY][self.futurX],Defender.Defender)):
+                powerUp = self.env.grille[self.futurY][self.futurX]
+                self.invincibilityCPT = powerUp.time
+                self.invincibility = True
+                self.env.kill(powerUp)
+                self.defendersEaten += 1
+                for agent in self.env.lesAgents:
+                    if(isinstance(agent,Hunter.Hunter)):
+                        agent.doitFuir = True      
+
+            if ((self.env.grille[self.futurY][self.futurX] != None) and isinstance(self.env.grille[self.futurY][self.futurX],Winner.Winner)):
+                self.env.kill(self.env.grille[self.futurY][self.futurX])
+                self.hasWon = True              
 
             self.env.grille[self.y][self.x] = None
             self.env.grille[self.futurY][self.futurX] = self
             self.x = self.futurX
             self.y = self.futurY
             self.calculeScore()
-
-
 
 
     def cercle(self,fenetre,x, y, r, coul ='black'):

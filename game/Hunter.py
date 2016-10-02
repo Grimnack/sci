@@ -4,14 +4,15 @@ import random
 
 class Hunter(Agent.Agent):
     """docstring for Hunter"""
-    def __init__(self, x,y,env,pace=3):
+    def __init__(self, x,y,env,pace):
         super(Hunter, self).__init__()
         self.x = x
         self.y = y
         self.env = env
         self.bougera = True
         self.futurX = None
-        self.futurY = None 
+        self.futurY = None
+        self.doitFuir = False
 
         #Vitesse du Hunter
         self.pace = pace
@@ -64,24 +65,48 @@ class Hunter(Agent.Agent):
         random.shuffle(lesPos)
         minX = None
         minY = None
-        minScore = None
-        for (x,y) in lesPos :
-            if not (self.env.grille[y][x] == None) :
-                if not self.env.grille[y][x].isAvatar() :
-                    continue    
-            score = self.env.score[y][x]
-            if self.env.score[y][x] == None :
-                # Ici on ne va pas dans un mur
-                continue
-            if minScore == None :
-                if score <= self.env.score[y][x] :
+
+        if(not self.doitFuir):
+            minScore = None
+            for (x,y) in lesPos :
+                if not (self.env.grille[y][x] == None) :
+                    if not self.env.grille[y][x].isAvatar() :
+                        continue    
+                score = self.env.score[y][x]
+                if self.env.score[y][x] == None :
+                    # Ici on ne va pas dans un mur
+                    continue
+                if minScore == None :
+                    if score <= self.env.score[y][x] :
+                        minScore = score
+                        minX = x
+                        minY = y
+                elif minScore > score :
                     minScore = score
                     minX = x
                     minY = y
-            elif minScore > score :
-                minScore = score
-                minX = x
-                minY = y
+        else:
+            minScore = None
+            for (x,y) in lesPos :
+                if not (self.env.grille[y][x] == None) :
+                    if not self.env.grille[y][x].isAvatar() :
+                        continue    
+                score = self.env.score[y][x]
+                if self.env.score[y][x] == None :
+                    # Ici on ne va pas dans un mur
+                    continue
+                if minScore == None :
+                    if score >= self.env.score[y][x] :
+                        minScore = score
+                        minX = x
+                        minY = y
+                elif minScore < score :
+                    minScore = score
+                    minX = x
+                    minY = y       
+
+
+
         if minScore == None :
             self.bougera = False
         else :
@@ -118,4 +143,4 @@ class Hunter(Agent.Agent):
       
 
     def place_agent(self,fenetre):
-        self.cercle(fenetre, self.x*fenetre.caseX + fenetre.caseX/2, self.y * fenetre.caseY + fenetre.caseY / 2,min(fenetre.caseX,fenetre.caseY)/2 ,coul='red')
+        self.cercle(fenetre, self.x*fenetre.caseX + fenetre.caseX/2, self.y * fenetre.caseY + fenetre.caseY / 2,min(fenetre.caseX,fenetre.caseY)/2 ,coul='white' if self.doitFuir else 'red')

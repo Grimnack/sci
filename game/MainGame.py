@@ -3,6 +3,7 @@ sys.path.append('..')
 
 import SMAGame as sma
 from core import Window as w
+import WindowGame
 import GameAgentCreator as ga
 
 
@@ -12,11 +13,14 @@ canvasSizeX=800
 canvasSizeY=600
 
 nbWalls = 0
-nbHunters = 3
-hunterSpeed = 10
+nbHunters = 10
+hunterSpeed = 6
+avatarSpeed = 3
+defenderLife = 100
 
-initGame = ga.GameAgentCreator(gridSizeX,gridSizeY,nbWalls,nbHunters,hunterSpeed=hunterSpeed)
-fenetre = w.Window(gridSizeX=gridSizeX,gridSizeY=gridSizeY,canvasSizeX=canvasSizeX,canvasSizeY=canvasSizeY,boxSize=None,windowbg='black',title="Simulation de particules")
+initGame = ga.GameAgentCreator(gridSizeX,gridSizeY,nbWalls,nbHunters,hunterSpeed,avatarSpeed)
+#fenetre = w.Window(gridSizeX=gridSizeX,gridSizeY=gridSizeY,canvasSizeX=canvasSizeX,canvasSizeY=canvasSizeY,boxSize=None,windowbg='black',title="Simulation de particules")
+fenetre = WindowGame.WindowGame(gridSizeX=gridSizeX,gridSizeY=gridSizeY,canvasSizeX=canvasSizeX,canvasSizeY=canvasSizeY)
 
 sma.SMAGame(gridSizeX=gridSizeX
     ,gridSizeY=gridSizeY
@@ -33,4 +37,5 @@ sma.SMAGame(gridSizeX=gridSizeX
     ,fenetre=fenetre
     ,torique=True
     ,agentCreator=initGame
+    ,defenderLife=defenderLife
     ).run()
