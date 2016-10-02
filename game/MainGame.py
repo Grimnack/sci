@@ -1,9 +1,10 @@
+import sys
+sys.path.append('..')
+
 import SMAGame as sma
 from core import Window as w
 import GameAgentCreator as ga
 
-import sys
-sys.path.append('../core')
 
 gridSizeX=50
 gridSizeY=50
