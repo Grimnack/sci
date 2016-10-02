@@ -14,6 +14,8 @@ class SMAGame(SMA.SMA):
 
     def __init__(self,gridSizeX,gridSizeY,canvasSizeX,canvasSizeY,delay,scheduling,grid,nbTicks,trace,seed,refresh,nbAgents,torique,agentCreator,fenetre):
         super(SMAGame, self).__init__(gridSizeX,gridSizeY,canvasSizeX,canvasSizeY,delay,scheduling,grid,nbTicks,trace,seed,refresh,nbAgents,torique,agentCreator,fenetre)
+
+        self.GAMEOVER = """Un chasseur a mangé votre avatar, fin de partie.\nNombre de tours : """
         
         #Ajout des murs (au bord de la fenetre pour l'instant)
         for y in range(gridSizeY) :
@@ -40,6 +42,23 @@ class SMAGame(SMA.SMA):
         self.fenetre.can.bind("<Up>",self.avatarUp)
         self.fenetre.can.bind("<Down>",self.avatarDown)
         self.fenetre.can.pack()
+
+    def updateDisplay(self):
+        super(SMAGame, self).updateDisplay()
+
+        avatar = 0
+
+        for agent in self.env.lesAgents:
+            if isinstance(agent,Avatar.Avatar):
+                avatar += 1
+
+        if(avatar == 0):
+            toplevel = Toplevel()
+            label1 = Label(toplevel, text=self.GAMEOVER+str(self.nbActualTicks), height=0, width=100)
+            label1.pack()
+            toplevel.focus_force()
+            self.fenetre.can.destroy()
+
 
     def run(self):
         super(SMAGame, self).run()
