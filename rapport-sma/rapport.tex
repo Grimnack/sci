@@ -5,6 +5,8 @@
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{fontspec} %Les accents disparaissent sans, je sais pas pourquoi...
+\usepackage{pdflscape}
+
 %\usepackage[textwidth=14cm]{geometry}
 %\usepackage[textwidth=17cm,textheight=27cm]{geometry}
 
@@ -45,7 +47,7 @@ Afin de permettre une architecture sous forme de paquetage en Python, il faut mo
 Sans cette modification, les imports ne fonctionneront pas. Cette modification peut être faite dans un terminal (méthode temporaire) ou directement dans les fichiers \texttt{.bashrc} et/ou \texttt{.bash\_profile}.
 \newpage
 \subsection{Paquetage \texttt{core}}
-Avant d'expliquer les trois simulations effectuées, il est nécessaire de présenter le paquetage \texttt{core}. \texttt{core} contient la description générique des objets nécessaires à la mise d'un SMA (système multi-agents). Le paquetage contient cinq classes.
+Avant d'expliquer les trois simulations effectuées, il est nécessaire de présenter le paquetage \texttt{core}. \texttt{core} contient la description générique des objets nécessaires à la mise d'un SMA (système multi-agents). Le paquetage contient cinq classes. Vous pourrez trouver différents diagrammes UML en annexe.
  
 \medskip
 La classe \texttt{Agent} qui représente un agent du système. Placé dans un \texttt{Environnement}, il connaît ses coordonnées (\texttt{self.x} et \texttt{self.x} en Python, qui correspondent à \texttt{this.x} et \texttt{this.y} en Java). Quand le \texttt{SMA} lui \og donne la parole \fg{}, l'agent décide en fonction de stratégie (méthode \texttt{self.decide()}) puis se met à jour dans son environnement (\texttt{self.update()}). L'agent possède également une méthode \texttt{place\_agent()} qui concerne son affichage dans la fenêtre (classe \texttt{Window}).
@@ -108,6 +110,17 @@ Dans le cas d'une collision (\texttt{particule1.collision(particule2)}), la bill
 \includegraphics[height=6cm]{particules.png}
 \caption{Fenêtre d'exécution du programme \texttt{MainBille}. Les billes sont assignées d'une couleur aléatoire et d'un identifiant pour faciliter leur suivi.}
 \end{figure}
+
+\subsubsection{Performance}
+
+La courbe suivante montre les tests de performance effectués sur la simulation des particules.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=13cm]{courbe-particule.png}
+\end{figure}
+
+On constate que la durée moyenne d'un tick évolue linéairement par rapport au nombre de particules dans le système.
 \newpage
 
 \subsection{Poissons et requins dans le golfe (du Bénin)}
@@ -127,7 +140,7 @@ Avec ces paramètres, le but est de trouver d'atteindre une situation d'équilib
 
 \medskip
 La classe \texttt{FishAndSharkCreator} prend en paramètres un nombre de \texttt{Shark} et un nombre de \texttt{Fish}. Chaque appel à la méthode \texttt{FishAndSharkCreator.create(x,y)} renvoie aléatoirement un \texttt{Fish} ou un \texttt{Shark} qui sera placé aux coordonnées \texttt{x} et \texttt{y} dans un \texttt{Environnement}. Les coordonnées données en paramètre sont générées de façon aléatoire et renvoient vers une case vide qui sera occupé par le nouvel agent.
- 
+\newpage 
 \subsubsection{Paramètres spécifiques}
 
 En plus des paramètres généraux, la simulation Wator possède quelques paramètres spécifiques : 
@@ -136,17 +149,27 @@ En plus des paramètres généraux, la simulation Wator possède quelques param�
 \item \texttt{sharkBreedTime}, gestation des requins \texttt{Shark}
 \item \texttt{sharkStarveTime}, durée maximum sans manger pour les \texttt{Shark}
 \end{itemize}
-\newpage
+
 
 \subsubsection{Équilibre du modèle}
+Après plusieurs tentatives, la simulation qui a donné les meilleurs résultats possède ces paramètres :
+\begin{itemize}
+\item \texttt{gridSizeX=50, gridSizeY=50, canvasSizeX=800, canvasSizeY=600}
+\item \texttt{nbFish=200, nbShark=5, fishBreedTime=2, sharkBreedTime=10, sharkStarveTime=3}
+\end{itemize}
+
+\medskip
+Avec ces données, la simulation a été exécuté plusieurs heures et a atteint 700000 tours de parole (programme interrompu par l'utilisateur).
+
 \begin{figure}[!h]
 \centering
-\includegraphics[height=7cm]{1000tours.png}
-\caption{Courbes de population.}
+\includegraphics[width=13cm]{1000tours.png}
+\caption{Courbes de population sur 1000 ticks. La population de poissons est représentée par la courbe bleue, celle des requins par la courbe rouge.}
 \end{figure}
-
+\newpage
 
 \subsection{Pâques-Manne, ou l'histoire de chasseurs chassant un avatar}
+\subsubsection{Agents et stratégies}
 Enfin dans cette simulation correspondant au paquetage \texttt{game}, le système s'inspire du jeu vidéo des années 1980 \textit{Pac-Man}. 
 
 \medskip
@@ -166,6 +189,7 @@ Un agent \texttt{Defender} apparait à un emplacement aléatoire vide sur la map
 
 \medskip
 Enfin, un agent \texttt{Wall} qui est placé à la création de l'environnement et influe sur le calcul de la matrice de Dijkstra. \texttt{nbWalls} murs sont placés de manière aléatoire dans l'\texttt{Environnement}.
+\newpage
 
 \subsubsection{Remarques sur le GameAgentCreator}
 Le SMA à l'initialisation appelle \texttt{nbAgents} fois la méthode \texttt{create} de la classe \texttt{GameAgentCreator} et ajoute ces agents à l'environnement avec la méthode \texttt{ajouteAgent(Agent)} de la classe \texttt{Environnement}. Il y a deux remarques que l'on pourrait faire.
@@ -185,5 +209,23 @@ En plus des paramètres généraux, le jeu possède quelques paramètres spécif
 \item \texttt{enoughDefenders}, nombre de \texttt{Defender} nécessaire pour faire apparaître le \texttt{Winner}
 \item \texttt{defenderLife}, durée de vie d'un \texttt{Defender}
 \end{itemize}
-
+\newpage
+\begin{landscape}
+\section*{Annexe : Diagrammes UML}
+Voici trois drigrammes UML, liant \texttt{core} à \texttt{particules}, \texttt{wator} et \texttt{game}.
+\begin{figure}[!h]
+\centering
+\includegraphics[height=10cm]{uml-particule.png}
+\end{figure}
+\newpage
+\begin{figure}[!h]
+\centering
+\includegraphics[height=16cm]{uml-wator.png}
+\end{figure}
+\newpage
+\begin{figure}[!h]
+\centering
+\includegraphics[height=14cm]{uml-game.png}
+\end{figure}
+\end{landscape}
 \end{document}
