@@ -12,10 +12,10 @@ gridSizeY=50
 canvasSizeX=800
 canvasSizeY=600
 
-nbWalls = 500
+nbWalls = 128
 nbHunters = 10
-hunterSpeed = 6
-avatarSpeed = 3
+hunterSpeed = 10
+avatarSpeed = 1
 
 enoughDefenders = 4
 defenderLife = 100
