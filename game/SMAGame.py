@@ -92,6 +92,7 @@ class SMAGame(SMA.SMA):
         hunterSpeed = 0
         defendersEaten = 0 
         enoughDefenders = 0
+        invincibility = 0
         winner = False
 
         for agent in self.env.lesAgents:
