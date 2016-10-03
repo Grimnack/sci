@@ -4,7 +4,8 @@
 \usepackage[francais]{babel}
 \usepackage{hyperref}
 \usepackage{graphicx}
-%\usepackage{fontspec}
+\usepackage{fontspec} %Les accents disparaissent sans, je sais pas pourquoi...
+\usepackage[textwidth=14cm]{geometry}
 %\usepackage[textwidth=17cm,textheight=27cm]{geometry}
 
 %\setlength{\textwidth}{420 pt} 
@@ -94,7 +95,7 @@ Dans le cas d'une collision (\texttt{particule1.collision(particule2)}), la bill
 La deuxième simulation concerne le paquetage \texttt{wator}. Elle a pour but de voir comment des poissons (les agents \texttt{Fish} dans notre simulation) et des requins (agents \texttt{Shark}) cohabitent dans une zone. 
 
 \medskip
-Un agent \texttt{Fish} se déplace de façon aléatoire et se reproduit tous les \texttt{fishBreedTime} ticks. Pour se reproduire, le poisson doit se déplacer et donne naissance à un autre poisson sur la case où il était précédemment. Il observe donc dans le voisinage de moore les cases qui sont libres et en prend une au hasard si c'est possible. Enfin l'age augmente de 1 à chaque tick.
+Un agent \texttt{Fish} se déplace de façon aléatoire et se reproduit tous les \texttt{fishBreedTime} ticks. Pour se reproduire, le poisson doit se déplacer et donne naissance à un autre poisson sur la case où il était précédemment. Il observe donc dans le voisinage de Moore les cases qui sont libres et en prend une au hasard si c'est possible. Enfin l'âge augmente de 1 à chaque tick.
 
 \medskip
 Un \texttt{Shark} est affamé, il a \texttt{dontStarve} ticks pour manger un \texttt{Fish}. S'il n'y arrive pas à temps, il meurt. À l'instar du poisson, il peut se reproduire tous les \texttt{sharkBreedTime} et donne naissance à un nouveau requin sur la case qu'il occupait avant.
@@ -106,7 +107,7 @@ Comme pour l'agent \texttt{Bille} de la simulation précédente, les agents \tex
 Avec ces paramètres, le but est de trouver d'atteindre une situation d'équilibre. On veut éviter une pénurie de poissons (plus de poissons = mort des requins affamés = zone vierge de tout animal) et une absence de requins (les poissons vont se reproduire jusqu'à remplir entièrement la zone).
 
 \medskip
-La classe FishAndSharkCreator prend un nombre de Shark, un nombre de Fish et à chaque appel à create renvoie aléatoirement un Fish ou un Shark dans une place libre trouvé aléatoirement.
+La classe \texttt{FishAndSharkCreator} prend en paramètres un nombre de \texttt{Shark} et un nombre de \texttt{Fish}. Chaque appel à la méthode \texttt{FishAndSharkCreator.create(x,y)} renvoie aléatoirement un \texttt{Fish} ou un \texttt{Shark} qui sera placé aux coordonnées \texttt{x} et \texttt{y} dans un \texttt{Environnement}. Les coordonnées données en paramètre sont générées de façon aléatoire et renvoient vers une case vide qui sera occupé par le nouvel agent.
  
 \begin{figure}[!h]
 \centering
@@ -114,23 +115,31 @@ La classe FishAndSharkCreator prend un nombre de Shark, un nombre de Fish et à 
 \caption{Courbes de population.}
 \end{figure}
 
-
-\subsection{Avatar et Hunters}
-Enfin dans cette simulation correspondant au package \texttt{game}, le but en tant qu'Avatar est de ne pas se faire attraper par les Hunters sinon la partie est perdue. En revanche pour gagner la partie si vous attraper un bonus d'invicibilité, vous pouvez pendant un court momment attrapper les Hunters qui tentent de fuir. Une fois tous les Hunters attrapés, la partie est gagnée.
-
-\medskip
-Un agent \texttt{Avatar} se déplace en fonction du dernier imput (gauche,droite,haut ou bas) du joueur. Si l'Avatar fonce dans un mur il ne se déplace plus, si l'Avatar fonce dans un Hunter il meurt. Enfin à chaque appel de update il va calculer sa matrice de Dijkstra qui sera enregistrée à l'environnement ainsi tous les Hunter peuvent y acceder.
+\subsection{Pâques-Manne, ou l'histoire de chasseurs chassant un avatar}
+Enfin dans cette simulation correspondant au paquetage \texttt{game}, le système s'inspire du jeu vidéo des années 1980 \textit{Pac-Man}. 
 
 \medskip
-Un agent \texttt{Hunter} se déplace en fonction de la matrice de Dijkstra et des autres agents (il n'ira pas dans un mur ni dans un autre Hunter mais ira tuer l'Avatar) en choisissant uniquement une position améliorante (avec un score strictement inférieur à sa position actuelle, l'inverse si l'Avatar est invulnérable). Parmis les futurs position améliorante il en choisit une de libre au hasard pour éviter de faire d'abord tous les déplacements vers le bas puis tous les déplacements vers la droite (par exemple).
+L'utilisateur contrôle au clavier un agent \texttt{Avatar}. Le but en tant qu'\texttt{Avatar} est de ne pas se faire attraper par les \texttt{Hunters} sinon la partie est perdue. Pour gagner, le joueur peut dévorer tous les \texttt{Hunters} ou prendre le \texttt{Winner} qui apparaît une fois que l'\texttt{Avatar} ait mangé suffisamment de \texttt{Defender}. En mangeant un \texttt{Defender}, le joueur est invincible pendant un certain temps et peut dévorer les \texttt{Hunters} qui tentent de fuir.
 
 \medskip
-Un agent \texttt{Defender} apparait à un emplacement aléatoire vide sur la map et reste en vie n tours. Il permet de donner l'invicibilité.
+Un agent \texttt{Avatar} se déplace en fonction du dernier input (gauche, droite, haut ou bas) du joueur. Si l'\texttt{Avatar} fonce dans un mur il ne se déplace plus et attend que le joueur donne une nouvelle direction. Enfin à chaque prise de parole, l'agent va calculer sa matrice de Dijkstra (\texttt{Avatar.update()}) qui sera enregistrée dans l'\texttt{Environnement} ; tous les \texttt{Hunter} peuvent ainsi y accéder et voir quel case les rapprochent de l'\texttt{Avatar}.
 
 \medskip
-Enfin un agent \texttt{Wall} qui est placé à la création de l'environnement et influe sur le calcule de la matrice de Dijkstra. Les murs sont placés de manière aléatoire.
+Un agent \texttt{Hunter} se déplace en fonction de la matrice de Dijkstra et des autres agents (il n'ira pas dans un mur ni dans un autre \texttt{Hunter} mais ira tuer l'\texttt{Avatar}) en choisissant uniquement une position améliorante (avec un score strictement inférieur à sa position actuelle, l'inverse si l'\texttt{Avatar} est invulnérable). Parmi les futures positions améliorantes avec le même score, il en choisit une de libre au hasard pour éviter de privilégier tous les déplacements vers une direction (par exemple, l'agent pourrait d'abord regarder toujours vers le bas).
+
+\medskip
+Un agent \texttt{Defender} apparait à un emplacement aléatoire vide sur la map et reste en vie \texttt{defenderLife} tours. Il permet de donner une invincibilité temporaire à l'\texttt{Avatar} et a pour conséquence de changer la stratégie des \texttt{Hunter} (\texttt{Hunter.doitFuir = True}).
+
+\medskip
+Enfin, un agent \texttt{Wall} qui est placé à la création de l'environnement et influe sur le calcul de la matrice de Dijkstra. \texttt{nbWalls} murs sont placés de manière aléatoire dans l'\texttt{Environnement}.
 
 \subsubsection{Remarques sur le GameAgentCreator}
-Le SMA à l'initialisation appelle nbAgents fois la méthode create de la classe GameAgentCreator et l'ajoute à l'environnement avec la méthode ajouteAgent(Agent) de la classe environnement. Le seul soucis actuel c'est que la classe SMA appelle decide() sur tous les agents y compris les murs... Néanmoins le jeu et fluide quand même. Donc le GameAgentCreator crée d'abord tous les murs et ensuite les Hunters puis l'Avatar. Problème on peut se retrouver enfermé.
+Le SMA à l'initialisation appelle \texttt{nbAgents} fois la méthode \texttt{create} de la classe \texttt{GameAgentCreator} et ajoute ces agents à l'environnement avec la méthode \texttt{ajouteAgent(Agent)} de la classe \texttt{Environnement}. Il y a deux remarques que l'on pourrait faire.
+
+\medskip
+Le premier est l'intérêt de donner la parole aux agents \texttt{Wall}. Une fois placé à la création, le mur est un élément qui ne décide de rien (\texttt{decide()}) et qui n'a pas besoin de se mettre à jour (\texttt{update()}). Même si le jeu est fluide sur les différents tests effectués, ne pas donner la parole aux murs permettrait un gain de performance.
+
+\medskip
+Le deuxième problème est la génération des agents. \texttt{GameAgentCreator} recherche une place libre aléatoire et peut placer des agents \og entre quatre murs \fg{}. Dans le meilleur des cas, l'\texttt{Avatar} peut quand même atteindre les \texttt{Defender} et prendre le Winner pour finir le jeu.  Dans le pire de cas, l'\texttt{Avatar} est isolé et, puisqu'il n'y a pas de chemin possible entre les chasseurs et le joueur ET que le \texttt{Winner} est apparu en dehors de la zone accesible par l'\texttt{Avatar}, le joueur ne peut ni perdre ni gagner. Discutée pendant le développement, la génération procédurale de labyrinthe de n'a pas été implémentée.
 
 \end{document}

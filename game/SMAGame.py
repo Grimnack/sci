@@ -149,23 +149,23 @@ class SMAGame(SMA.SMA):
                 agent.noticeAvatar(0,1)
 
     def popDefender(self):
-        a = random.randint(0, len(self.env.grille[0]) - 1)
-        b = random.randint(0, len(self.env.grille) - 1)
+        a = random.randint(0, len(self.env.grille) - 1)
+        b = random.randint(0, len(self.env.grille[0]) - 1)
         while( not (self.env.grille[a][b] == None) ):
-            a = random.randint(0, len(self.env.grille[0]) - 1)
-            b = random.randint(0, len(self.env.grille) - 1)
+            a = random.randint(0, len(self.env.grille) - 1)
+            b = random.randint(0, len(self.env.grille[0]) - 1)
 
-        power = Defender.Defender(a,b,self.gridSizeX,self.gridSizeY,self.env,self.defenderLife)
+        power = Defender.Defender(b,a,self.gridSizeX,self.gridSizeY,self.env,self.defenderLife)
         self.env.ajouteAgent(power)
 
     def popWinner(self):
-        a = random.randint(0, len(self.env.grille[0]) - 1)
-        b = random.randint(0, len(self.env.grille) - 1)
+        a = random.randint(0, len(self.env.grille) - 1)
+        b = random.randint(0, len(self.env.grille[0]) - 1)
         while( not (self.env.grille[a][b] == None) ):
-            a = random.randint(0, len(self.env.grille[0]) - 1)
-            b = random.randint(0, len(self.env.grille) - 1)
+            a = random.randint(0, len(self.env.grille) - 1)
+            b = random.randint(0, len(self.env.grille[0]) - 1)
 
-        power = Winner.Winner(a,b)
+        power = Winner.Winner(b,a)
         self.env.ajouteAgent(power)
 
     def speedUpHunter(self,event):
