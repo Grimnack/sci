@@ -126,7 +126,7 @@ class Avatar(Agent.Agent):
 
             if ((self.env.grille[self.futurY][self.futurX] != None) and isinstance(self.env.grille[self.futurY][self.futurX],Defender.Defender)):
                 powerUp = self.env.grille[self.futurY][self.futurX]
-                self.invincibilityCPT = powerUp.time
+                self.invincibilityCPT = len(self.env.grille[0]) + len(self.env.grille)
                 self.invincibility = True
                 self.env.kill(powerUp)
                 self.defendersEaten += 1

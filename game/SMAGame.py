@@ -27,7 +27,7 @@ class SMAGame(SMA.SMA):
 
         self.NOHUNTERS = """Vous avez mangé tous les chasseurs, fin de la partie.\nNombre de tours : """
 
-        self.WINNER = """YOU'RE WINNER\nNombre de tours : """
+        self.WINNER = """YOU WIN !\nNombre de tours : """
 
         self.defenderLife = defenderLife
 

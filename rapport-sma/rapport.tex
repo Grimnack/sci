@@ -5,7 +5,7 @@
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{fontspec} %Les accents disparaissent sans, je sais pas pourquoi...
-\usepackage[textwidth=14cm]{geometry}
+%\usepackage[textwidth=14cm]{geometry}
 %\usepackage[textwidth=17cm,textheight=27cm]{geometry}
 
 %\setlength{\textwidth}{420 pt} 
@@ -29,8 +29,9 @@
 
 \subsection{Usage}
 
-En ouvrant l'archive, on peut constater dans le la présence de 4 répertoires : un \texttt{core} qui contient la base d'un système multi-agents et un pour chaque simulation (\texttt{particules}, \texttt{wator} et \texttt{game}). Chacun des trois simulations contient une classe Main pour lancer le programme.
+En ouvrant l'archive, on peut constater dans le la présence de 4 répertoires : un \texttt{core} qui contient la base d'un système multi-agents et un pour chaque simulation (\texttt{particules}, \texttt{wator} et \texttt{game}). Chacun des trois simulations contient une classe Main pour lancer le programme (respectivement (\texttt{MainBille}, \texttt{MainWator} et \texttt{MainGame}). Chaque fichier Main contient différents paramètres modifiables qui seront détaillés plus tard.
 
+\medskip
 Pour réaliser les différents simulations, il a été décidé d'utiliser la langage Python 3 et la bibliothèque graphique \href{https://wiki.python.org/moin/TkInter}{\texttt{Tkinter}}. On peut vérifier l'installation de Tkinter en lançant la commande \texttt{python3 -m tkinter} (ou \texttt{python -m tkinter}) ou l'installer avec \texttt{sudo apt-get install python3-tk} (ou chercher le nom du paquet avec \texttt{sudo apt-cache search tk}).
 
 \medskip
@@ -41,11 +42,8 @@ Afin de permettre une architecture sous forme de paquetage en Python, il faut mo
 \texttt{export PYTHONPATH=\$PYTHONPATH:/home/pmatthieu/example/tps/sci-caron-moevi}
 
 \medskip
-Sans cette modification, les imports ne marcheront pas. Cette modification peut être faite dans un terminal (méthode temporaire) ou directement dans les fichiers \texttt{.bashrc} et/ou \texttt{.bash\_profile}.
-
-\medskip
-modifier les paramètres dans MainXXX.py, etc.
-
+Sans cette modification, les imports ne fonctionneront pas. Cette modification peut être faite dans un terminal (méthode temporaire) ou directement dans les fichiers \texttt{.bashrc} et/ou \texttt{.bash\_profile}.
+\newpage
 \subsection{Paquetage \texttt{core}}
 Avant d'expliquer les trois simulations effectuées, il est nécessaire de présenter le paquetage \texttt{core}. \texttt{core} contient la description générique des objets nécessaires à la mise d'un SMA (système multi-agents). Le paquetage contient cinq classes.
  
@@ -65,9 +63,29 @@ La classe \texttt{SMA} contient la méthode \texttt{run()} qui effectue le tour 
 \medskip
 La classe \texttt{Window} concerne tout ce qui l'affichage. En se basant sur la bibliothèque graphique \texttt{Tkinter}, la classe permet l'affichage du système et l'affichage d'une grille si l'utilisateur le souhaite.
 
+\subsection{Paramètres généraux}
+
+Les trois simulations (\texttt{particules}, \texttt{wator} et \texttt{game}) partagent des paramètres configurables, qui viennent de la  classe \texttt{SMA} du paquetage \texttt{core} :
+\begin{itemize}
+\item \texttt{gridSizeX} et \texttt{gridSizeY}, le nombre de cases du modèle
+\item \texttt{canvasSizeX} et \texttt{canvasSizeY}, la taille de la vue en pixels
+\item \texttt{delay}, un délai en millisecondes entre chaque tick.
+\item \texttt{scheduling}, équitable, séquentiel ou aléatoire.
+\item \texttt{nbTicks}, nombre de tours de parole, infini si \texttt{nbTicks == 0}.
+\item \texttt{grid}, affichage de la grille ou non.
+\item \texttt{trace}, trace ou non (utile pour récolter les données pour gnuplot).
+\item \texttt{torique}, environnement torique ou non.
+\item \texttt{refresh}, fréquence de rafraîchissement de la vue.
+\item \texttt{nbAgents}, nombre d'agents au départ de la simulation.
+\item \texttt{agentCreator}, générateur d'agents.
+\end{itemize}
+\newpage
+
 \section{Simulations}
 
 \subsection{Tube à particules}
+
+\subsubsection{Agents et stratégies}
 
 La première simulation, le paquetage \texttt{particules}, reproduit le comportement de billes (ou particules) dans un espace. Cet espace peut torique ou non ; s'il ne l'est pas, les particules rebondissent contre les murs. Les particules rebondissent également en collision.
 
@@ -83,13 +101,14 @@ La stratégie d'une particule est la suivante :
 \end{itemize}
 
 \medskip
-Dans le cas d'une collision (\texttt{particule1.collision(particule2)}), la bille \og incidente \fg{}, c'est-à-dire celle qui essaye d'aller dans une case déjà occupée, échange sa direction avec l'autre particule. Il a été décidé que la bille incidente ne se déplace pas pendant le tick de collision, malgré sa nouvelle direction. Afin d'avoir un comportement cohérent lorsque les billes remplissent la grille et donc qu'elles ne peuvent pas bouger.
+Dans le cas d'une collision (\texttt{particule1.collision(particule2)}), la bille \og incidente \fg{}, c'est-à-dire celle qui essaye d'aller dans une case déjà occupée, échange sa direction avec l'autre particule. Il a été décidé que la bille incidente ne se déplace pas pendant le tick de collision, malgré sa nouvelle direction. Ainsi, lorsque les billes occupent toute la grille, aucune d'entre elles ne bouge.
  
 \begin{figure}[!h]
 \centering
-\includegraphics[height=7cm]{particules.png}
+\includegraphics[height=6cm]{particules.png}
 \caption{Fenêtre d'exécution du programme \texttt{MainBille}. Les billes sont assignées d'une couleur aléatoire et d'un identifiant pour faciliter leur suivi.}
 \end{figure}
+\newpage
 
 \subsection{Poissons et requins dans le golfe (du Bénin)}
 La deuxième simulation concerne le paquetage \texttt{wator}. Elle a pour but de voir comment des poissons (les agents \texttt{Fish} dans notre simulation) et des requins (agents \texttt{Shark}) cohabitent dans une zone. 
@@ -109,17 +128,32 @@ Avec ces paramètres, le but est de trouver d'atteindre une situation d'équilib
 \medskip
 La classe \texttt{FishAndSharkCreator} prend en paramètres un nombre de \texttt{Shark} et un nombre de \texttt{Fish}. Chaque appel à la méthode \texttt{FishAndSharkCreator.create(x,y)} renvoie aléatoirement un \texttt{Fish} ou un \texttt{Shark} qui sera placé aux coordonnées \texttt{x} et \texttt{y} dans un \texttt{Environnement}. Les coordonnées données en paramètre sont générées de façon aléatoire et renvoient vers une case vide qui sera occupé par le nouvel agent.
  
+\subsubsection{Paramètres spécifiques}
+
+En plus des paramètres généraux, la simulation Wator possède quelques paramètres spécifiques : 
+\begin{itemize}
+\item \texttt{fishBreedTime}, gestation des poissons \texttt{Fish}
+\item \texttt{sharkBreedTime}, gestation des requins \texttt{Shark}
+\item \texttt{sharkStarveTime}, durée maximum sans manger pour les \texttt{Shark}
+\end{itemize}
+\newpage
+
+\subsubsection{Équilibre du modèle}
 \begin{figure}[!h]
 \centering
 \includegraphics[height=7cm]{1000tours.png}
 \caption{Courbes de population.}
 \end{figure}
 
+
 \subsection{Pâques-Manne, ou l'histoire de chasseurs chassant un avatar}
 Enfin dans cette simulation correspondant au paquetage \texttt{game}, le système s'inspire du jeu vidéo des années 1980 \textit{Pac-Man}. 
 
 \medskip
-L'utilisateur contrôle au clavier un agent \texttt{Avatar}. Le but en tant qu'\texttt{Avatar} est de ne pas se faire attraper par les \texttt{Hunters} sinon la partie est perdue. Pour gagner, le joueur peut dévorer tous les \texttt{Hunters} ou prendre le \texttt{Winner} qui apparaît une fois que l'\texttt{Avatar} ait mangé suffisamment de \texttt{Defender}. En mangeant un \texttt{Defender}, le joueur est invincible pendant un certain temps et peut dévorer les \texttt{Hunters} qui tentent de fuir.
+L'utilisateur contrôle au clavier un agent \texttt{Avatar}. L'avatar se déplace dans quatre directions (haut, bas, gauche et droite). Le joueur peut égaler accélérer ou ralentir avec la vitesse de l'avatar mais aussi des chasseurs (\texttt{Hunter}).
+
+\medskip
+Le but en tant qu'\texttt{Avatar} est de ne pas se faire attraper par les \texttt{Hunters} sinon la partie est perdue. Pour gagner, le joueur peut dévorer tous les \texttt{Hunters} ou prendre le \texttt{Winner} qui apparaît une fois que l'\texttt{Avatar} ait mangé suffisamment de \texttt{Defender}. En mangeant un \texttt{Defender}, le joueur est invincible pendant un certain temps et peut dévorer les \texttt{Hunters} qui tentent de fuir.
 
 \medskip
 Un agent \texttt{Avatar} se déplace en fonction du dernier input (gauche, droite, haut ou bas) du joueur. Si l'\texttt{Avatar} fonce dans un mur il ne se déplace plus et attend que le joueur donne une nouvelle direction. Enfin à chaque prise de parole, l'agent va calculer sa matrice de Dijkstra (\texttt{Avatar.update()}) qui sera enregistrée dans l'\texttt{Environnement} ; tous les \texttt{Hunter} peuvent ainsi y accéder et voir quel case les rapprochent de l'\texttt{Avatar}.
@@ -141,5 +175,15 @@ Le premier est l'intérêt de donner la parole aux agents \texttt{Wall}. Une foi
 
 \medskip
 Le deuxième problème est la génération des agents. \texttt{GameAgentCreator} recherche une place libre aléatoire et peut placer des agents \og entre quatre murs \fg{}. Dans le meilleur des cas, l'\texttt{Avatar} peut quand même atteindre les \texttt{Defender} et prendre le Winner pour finir le jeu.  Dans le pire de cas, l'\texttt{Avatar} est isolé et, puisqu'il n'y a pas de chemin possible entre les chasseurs et le joueur ET que le \texttt{Winner} est apparu en dehors de la zone accesible par l'\texttt{Avatar}, le joueur ne peut ni perdre ni gagner. Discutée pendant le développement, la génération procédurale de labyrinthe de n'a pas été implémentée.
+
+\subsubsection{Paramètres spécifiques}
+
+En plus des paramètres généraux, le jeu possède quelques paramètres spécifiques configurables dans le fichier \texttt{MainGame.py} :
+\begin{itemize}
+\item \texttt{hunterSpeed}, vitesse des chasseurs (un chasseur décide et se met à jour tous les \texttt{hunterSpeed} tours)
+\item \texttt{avatarSpeed}, vitesse du joueur
+\item \texttt{enoughDefenders}, nombre de \texttt{Defender} nécessaire pour faire apparaître le \texttt{Winner}
+\item \texttt{defenderLife}, durée de vie d'un \texttt{Defender}
+\end{itemize}
 
 \end{document}
