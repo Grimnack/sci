@@ -1,10 +1,11 @@
+import sys
+sys.path.append('..')
+
 import SMAWator as sma
 import Ocean as o
 import FishAndSharkCreator as wildLife
 
-#Remove those two lines if it doesn't work
-import sys
-sys.path.append('../core')
+
 
 gridSizeX=50
 gridSizeY=50

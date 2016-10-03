@@ -1,3 +1,5 @@
+import sys
+sys.path.append('..')
 from core import SMA
 from core import Window as w
 import BilleCreator as bc

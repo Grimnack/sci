@@ -1,9 +1,10 @@
 \documentclass[a4paper]{article}
 
+\usepackage[utf8]{inputenc}
 \usepackage[francais]{babel}
 \usepackage{hyperref}
 \usepackage{graphicx}
-\usepackage{fontspec}
+%\usepackage{fontspec}
 %\usepackage[textwidth=17cm,textheight=27cm]{geometry}
 
 %\setlength{\textwidth}{420 pt} 
@@ -32,6 +33,7 @@ En ouvrant l'archive, on peut constater dans le la présence de 4 répertoires :
 Pour réaliser les différents simulations, il a été décidé d'utiliser la langage Python 3 et la bibliothèque graphique \href{https://wiki.python.org/moin/TkInter}{\texttt{Tkinter}}. On peut vérifier l'installation de Tkinter en lançant la commande \texttt{python3 -m tkinter} (ou \texttt{python -m tkinter}) ou l'installer avec \texttt{sudo apt-get install python3-tk} (ou chercher le nom du paquet avec \texttt{sudo apt-cache search tk}).
 
 \medskip
+La modification de la variable \texttt{\$PYTHONPATH} se fait directement dans chaque Main. Néanmoins si ça ne marche pas il faut faire les étapes suivantes.
 Afin de permettre une architecture sous forme de paquetage en Python, il faut modifier la variable d'environnement \texttt{\$PYTHONPATH} en ajoutant le chemin vers le répertoire \texttt{sci} 
 
 \medskip
@@ -56,6 +58,7 @@ La classe \texttt{AgentCreator} génère un ou plusieurs \texttt{Agent} du syst�
 La classe \texttt{Environnement} représente l'espace du système sous forme de grille. Cette grille contient l'ensemble des agents et leur coordonnées. L'environnement peut être torique ou non. 
 
 \medskip
+La classe \texttt{SMA} est la classe qui controle tout, à l'initialisation elle va créer un environnement et va faire nbAgents appels à la méthode create de la classe AgentCreator.
 La classe \texttt{SMA} contient la méthode \texttt{run()} qui effectue le tour de parole (ou tick). Dans un tick, le \texttt{SMA} appelle un ou plusieurs agents avec la méthode \texttt{agent.decide()} en fonction du scheduling (\texttt{self.scheduling}). Le scheduling peut être séquentiel, équitable ou aléatoire. Un fois le tour fini, l'affichage est mis à jour avec la méthode \texttt{SMA.updateDisplay()}.
 
 \medskip
@@ -79,18 +82,19 @@ La stratégie d'une particule est la suivante :
 \end{itemize}
 
 \medskip
-Dans le cas d'une collision (\texttt{particule1.collision(particule2)}), la bille \og incidente \fg{}, c'est-à-dire celle qui essaye d'aller dans une case déjà occupée, échange sa direction avec l'autre particule. Il a été décidé que la bille incidente ne se déplace pas pendant le tick de collision, malgré sa nouvelle direction.
+Dans le cas d'une collision (\texttt{particule1.collision(particule2)}), la bille \og incidente \fg{}, c'est-à-dire celle qui essaye d'aller dans une case déjà occupée, échange sa direction avec l'autre particule. Il a été décidé que la bille incidente ne se déplace pas pendant le tick de collision, malgré sa nouvelle direction. Afin d'avoir un comportement cohérent lorsque les billes remplissent la grille et donc qu'elles ne peuvent pas bouger.
  
 \begin{figure}[!h]
 \centering
 \includegraphics[height=7cm]{particules.png}
 \caption{Fenêtre d'exécution du programme \texttt{MainBille}. Les billes sont assignées d'une couleur aléatoire et d'un identifiant pour faciliter leur suivi.}
 \end{figure}
+
 \subsection{Poissons et requins dans le golfe (du Bénin)}
 La deuxième simulation concerne le paquetage \texttt{wator}. Elle a pour but de voir comment des poissons (les agents \texttt{Fish} dans notre simulation) et des requins (agents \texttt{Shark}) cohabitent dans une zone. 
 
 \medskip
-Un agent \texttt{Fish} se déplace de façon aléatoire et se reproduit tous les \texttt{fishBreedTime} ticks. Pour se reproduire, le poisson doit se déplacer et donne naissance à un autre poisson sur la case où il était précédemment.
+Un agent \texttt{Fish} se déplace de façon aléatoire et se reproduit tous les \texttt{fishBreedTime} ticks. Pour se reproduire, le poisson doit se déplacer et donne naissance à un autre poisson sur la case où il était précédemment. Il observe donc dans le voisinage de moore les cases qui sont libres et en prend une au hasard si c'est possible. Enfin l'age augmente de 1 à chaque tick.
 
 \medskip
 Un \texttt{Shark} est affamé, il a \texttt{dontStarve} ticks pour manger un \texttt{Fish}. S'il n'y arrive pas à temps, il meurt. À l'instar du poisson, il peut se reproduire tous les \texttt{sharkBreedTime} et donne naissance à un nouveau requin sur la case qu'il occupait avant.
@@ -101,6 +105,8 @@ Comme pour l'agent \texttt{Bille} de la simulation précédente, les agents \tex
 \medskip
 Avec ces paramètres, le but est de trouver d'atteindre une situation d'équilibre. On veut éviter une pénurie de poissons (plus de poissons = mort des requins affamés = zone vierge de tout animal) et une absence de requins (les poissons vont se reproduire jusqu'à remplir entièrement la zone).
 
+\medskip
+La classe FishAndSharkCreator prend un nombre de Shark, un nombre de Fish et à chaque appel à create renvoie aléatoirement un Fish ou un Shark dans une place libre trouvé aléatoirement.
  
 \begin{figure}[!h]
 \centering
@@ -108,7 +114,23 @@ Avec ces paramètres, le but est de trouver d'atteindre une situation d'équilib
 \caption{Courbes de population.}
 \end{figure}
 
-WHY
-\subsection{Pac-Man}
+
+\subsection{Avatar et Hunters}
+Enfin dans cette simulation correspondant au package \texttt{game}, le but en tant qu'Avatar est de ne pas se faire attraper par les Hunters sinon la partie est perdue. En revanche pour gagner la partie si vous attraper un bonus d'invicibilité, vous pouvez pendant un court momment attrapper les Hunters qui tentent de fuir. Une fois tous les Hunters attrapés, la partie est gagnée.
+
+\medskip
+Un agent \texttt{Avatar} se déplace en fonction du dernier imput (gauche,droite,haut ou bas) du joueur. Si l'Avatar fonce dans un mur il ne se déplace plus, si l'Avatar fonce dans un Hunter il meurt. Enfin à chaque appel de update il va calculer sa matrice de Dijkstra qui sera enregistrée à l'environnement ainsi tous les Hunter peuvent y acceder.
+
+\medskip
+Un agent \texttt{Hunter} se déplace en fonction de la matrice de Dijkstra et des autres agents (il n'ira pas dans un mur ni dans un autre Hunter mais ira tuer l'Avatar) en choisissant uniquement une position améliorante (avec un score strictement inférieur à sa position actuelle, l'inverse si l'Avatar est invulnérable). Parmis les futurs position améliorante il en choisit une de libre au hasard pour éviter de faire d'abord tous les déplacements vers le bas puis tous les déplacements vers la droite (par exemple).
+
+\medskip
+Un agent \texttt{Defender} apparait à un emplacement aléatoire vide sur la map et reste en vie n tours. Il permet de donner l'invicibilité.
+
+\medskip
+Enfin un agent \texttt{Wall} qui est placé à la création de l'environnement et influe sur le calcule de la matrice de Dijkstra. Les murs sont placés de manière aléatoire.
+
+\subsubsection{Remarques sur le GameAgentCreator}
+Le SMA à l'initialisation appelle nbAgents fois la méthode create de la classe GameAgentCreator et l'ajoute à l'environnement avec la méthode ajouteAgent(Agent) de la classe environnement. Le seul soucis actuel c'est que la classe SMA appelle decide() sur tous les agents y compris les murs... Néanmoins le jeu et fluide quand même. Donc le GameAgentCreator crée d'abord tous les murs et ensuite les Hunters puis l'Avatar. Problème on peut se retrouver enfermé.
 
 \end{document}
